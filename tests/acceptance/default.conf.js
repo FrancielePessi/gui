@@ -1,8 +1,11 @@
 const env = require('./env.conf');
 
 const config = {
-    tests: './Scenarios/*_test.js',
-    clearDb: false,
+   // tests: './Scenarios/*flow_creation_and_execution_test.js',
+   tests: './Scenarios/*_test.js',
+   //tests:'./Scenarios/ManyTenants_test.js',
+    
+   clearDb: false,
     output: './output',
     multiple: {
         parallel: {
@@ -16,10 +19,11 @@ const config = {
             fullPageScreenshots: true,
             restart: false,
             keepBrowserState: true,
-            show: false,
+            show: true,
             waitForNavigation: ['networkidle2', 'domcontentloaded'],
             chrome: {
-                args: ['--no-sandbox', '--start-maximized', '--start-fullscreen'],
+                //args: ['--no-sandbox', '--start-maximized', '--start-fullscreen'],
+                args: ['--no-sandbox', '--start-maximized'],
                 handleSIGTERM: false,
                 handleSIGHUP: false,
                 defaultViewport: {
