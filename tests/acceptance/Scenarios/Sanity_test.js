@@ -135,18 +135,12 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click('Save')
         I.see('Template created.')
         I.wait(3)
-
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.click(locate('.firmware-enabled'));
-        I.see("Template successfully updated.")
-        //I.wait(3)
     I.click('Save')
-    I.see('Template created.')
-        //I.wait(3)
 })
 
-// OUTRO TENANT
 
 
 
