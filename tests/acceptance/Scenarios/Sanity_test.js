@@ -1,8 +1,8 @@
-//module.exports = 'Tenant verification';
+// ACESSAR GUI DOJOT
 Feature('Sanity CRUD');
 
-
-Scenario('@San: Login with admin user', async (I) => {
+//LOGAR COM O USUARIO ADMIN
+Scenario('@San: LOGIN WITH USER ADMIN', async (I) => {
 Before((login) => {
    login('admin');
 });
@@ -13,7 +13,7 @@ function openPage (I) {
 }
 
 // ADICIONAR UM NOVO USUARIO
-Scenario('@San: Created a new user', async(I) => {
+Scenario('@San: ADD A NEW USER', async(I) => {
     //openPage(I)    
     I.click(locate('a').withAttr({ href: '#/auth' }));
     I.click(locate('div').withAttr({title: 'Create a new user'}))
@@ -31,16 +31,16 @@ I.seeElement(locate('.card-size').find('div').withAttr({title: 'franciele'}))
 I.seeElement(locate('.card-size').find('div').withAttr({title: 'franpessi'}))
 I.seeElement(locate('.card-size').find('div').withAttr({title: 'fsilva@cpqd.com.br'}))
 
-//DESLOGANDO, PARA LOGAR COM O NOVO USER
+//LOGOUT DO USUARIO ADMIN
 I.click(locate('div').withAttr({ title: 'Login details' }))
 I.click('.btn-logout')
 
-// LOGANDO COM O NOVO USUARIO
+// LOGAR COM O NOVO USUARIO
 I.fillField('username', 'franpessi')
 I.fillField('password', 'temppwd')
 I.click('Login')
 
-// ATUALIZANDO SENHA
+// ATUALIZANDO SENHA -----> CADASTRAR SENHA DO USUARIO
 I.click(locate('div').withAttr({ title: 'Login details'}))
 I.click('.logout-page-changePassword')
 I.fillField('oldPassword', 'temppwd')
@@ -71,7 +71,8 @@ I.wait(5)
 
 //Scenario('@San: Logging in the new password', async(I) =>{})
 
-Scenario('@San: Update user', async(I) => {   
+//ALTERAR CADSTRO DO USUARIO
+Scenario('@San: CHANGE USER REGISTRATION', async(I) => {   
 I.click(locate('a').withAttr({ href: '#/auth' }));
 I.click('franciele')
 I.fillField('name', 'FranNavarro')
@@ -86,7 +87,7 @@ I.click('Save')
     I.seeElement(locate('.card-size').find('div').withAttr({ title: 'navarro@noemail.com.br' }));
 })      
 
-// REMOVENDO USUARIO NOVO
+// REMOVER USUÁRIO
 Scenario('@San: Delete User', async(I) =>{
     I.click(locate('a').withAttr({ href: '#/auth' }));
     I.click('FranNavarro')
@@ -97,7 +98,7 @@ Scenario('@San: Delete User', async(I) =>{
 })
 
 // ADICIONAR TEMPLATE 
-Scenario('@San: Template: Atributos vazios', async(I) => {
+Scenario('@San: TEMPLATE: EMPTY ATTRIBUTES', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'NewTemplate')
@@ -106,7 +107,9 @@ Scenario('@San: Template: Atributos vazios', async(I) => {
         I.wait(3)
 })
 
- Scenario('@San:Template: Attributes basic', async(I) =>{
+
+// ANALISAR ... 
+ /*Scenario('@San:Template: Attributes basic', async(I) =>{
     I.click(locate('a').withAttr({href: '#/template/list'}))
     I.click(locate('div').withAttr({title: 'Create a new template'}));
     I.fillField('Template Name', 'TempTest')
@@ -122,9 +125,26 @@ Scenario('@San: Template: Atributos vazios', async(I) => {
     I.click(locate('.footer button').withAttr({title: 'Add'}))
     I.click('Save')
       I.see('Template created.')
+})*/
+
+// ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
+Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+    I.click(locate('a').withAttr({ href: '#/template/list' }));
+    I.click(locate('div').withAttr({title: 'Create a new template'}))
+    I.fillField('Template Name', 'Hab Ger Firmware')
+    I.click('Save')
+        I.see('Template created.')
+        I.wait(3)
+
+    I.click('Hab Ger Firmware')
+    I.click('Manage Firmware')
+    I.click(locate('.firmware-enabled'));
+        I.see("Template successfully updated.")
+        //I.wait(3)
+    I.click('Save')
+    I.see('Template created.')
+        //I.wait(3)
 })
-
-
 
 // OUTRO TENANT
 
