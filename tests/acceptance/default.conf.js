@@ -1,9 +1,7 @@
 const env = require('./env.conf');
 
 const config = {
-   // tests: './Scenarios/*flow_creation_and_execution_test.js',
    tests: './Scenarios/*_test.js',
-   //tests:'./Scenarios/ManyTenants_test.js',
     
    clearDb: false,
     output: './output',

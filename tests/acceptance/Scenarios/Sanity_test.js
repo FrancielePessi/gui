@@ -139,7 +139,22 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click('Manage Firmware')
     I.click(locate('.firmware-enabled'));
     I.click('Save')
+
+    
+Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS')
+
+    I.click('Hab Ger Firmware')
+    I.click('Manage Firmware')
+    I.fillField('current_state', 'estado_atual')
+    I.fillField('update_result', 'atualizar_resultado')
+    I.fillField(locate('div').withAttr({upload_image:  'versao_transf'}))
+    I.fillField('apply_image', 'aplicar_imagem')
+    I.fillField("current_version", 'versao_at')
+    I.click('Save') 
+        I.see('Template successfully updated.')
 })
+
+
 
 
 
