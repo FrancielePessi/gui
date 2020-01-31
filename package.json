@@ -10,13 +10,12 @@
     "lint": "./node_modules/.bin/eslint src/js/*",
     "lint:watch": "gulp",
     "lint:fix": "./node_modules/.bin/eslint src/js/* --fix",
-
-    "test": "./node_modules/.bin/codeceptjs --config=tests/acceptance/codecept.conf.js run --steps", 
+    "test": "./node_modules/.bin/codeceptjs --config=tests/acceptance/codecept.conf.js run --steps",
     "test:clearDb": "./node_modules/.bin/codeceptjs --config=tests/acceptance/custom.conf.js run --steps",
-    "test:sanity": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Sanity.conf.js run --steps",
-    "test:tenat": "./node_modules/.bin/codeceptjs --config=tests/acceptance/tenant.conf.js run --steps",
-
-
+    "test:Sanity": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Sanity.conf.js run --steps",
+    "test:Tenant": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Tenant.conf.js run --steps",
+    "test:ManyTenants": "./node_modules/.bin/codeceptjs --config=tests/acceptance/ManyTenants.conf.js run --steps",
+    "test:Language": "./node_modules/.bin/codeceptjs --config=tests/acceptance/lang.conf.js run --steps",
     "perfomaceTests": "tests/acceptance/performanceTests/runTest.sh",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
@@ -118,8 +117,12 @@
     "webpack-dev-server": "^3.1.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
     "allure-commandline": "^2.9.0",
     "async-mqtt": "^2.2.1",
+    "babel-jest": "^25.1.0",
     "child_process": "^1.0.2",
     "codeceptjs": "^2.0.8",
     "eslint": "^5.5.0",
@@ -129,6 +132,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "gulp": "^3.9.1",
+    "jest": "^25.1.0",
     "mqtt": "^2.18.8",
     "puppeteer": "^1.13.0",
     "sync-request": "^6.1.0"

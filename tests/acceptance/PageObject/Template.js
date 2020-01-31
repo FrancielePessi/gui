@@ -256,7 +256,8 @@ module.exports = {
         I.click(locate('.body-actions--button div').withText(labelBtn));
     },
 
-    seeManageFirmware() {
+    
+    seeManageFirmware() {      
         this._clickOpenFooterBtnNew('Manage Firmware');
         I.waitForElement(locate('.firmware-enabled'), 5);
         I.click(locate('.firmware-enabled'));

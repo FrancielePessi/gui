@@ -5,8 +5,8 @@
     "user_update_err": "Failed to update user.",
     "user_create": "User created.",
     "user_remove": "User removed.",
-    "qst_remove": "You are about to remove this user.",
-    "qst_confirm_remove": "Are you sure?"
+    "modal_qst_remove": "You are about to remove this user.",
+    "modal_qst_confirm_remove": "Are you sure?"
   },
   "header_btn_new": {
     "label": "New user",

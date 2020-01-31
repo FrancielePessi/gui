@@ -53,10 +53,14 @@ yarn install
 yarn run test:clearDb 
 ```
 
-There are 2 types of scenarios: Basic and Advanced.
-In order to run each scenario, run the following command:
+There are 5 types of scenarios: Basic, Advanced, Tenant, ManyTenants and Sanity.
+To run each scenario, run the following command:
 
 ```shell
 yarn run test --grep @basic
 yarn run test --grep @adv
+
+yarn run test:Tenant
+yarn run test:ManyTenants
+yarn run test:Sanity
 ```

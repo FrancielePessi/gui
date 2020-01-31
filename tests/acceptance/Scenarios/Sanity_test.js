@@ -1,3 +1,5 @@
+
+
 // ACESSAR GUI DOJOT
 Feature('Sanity CRUD');
 
@@ -114,9 +116,6 @@ Scenario('@San: TEMPLATE: EMPTY ATTRIBUTES', async(I) => {
     I.click(locate('div').withAttr({title: 'Create a new template'}));
     I.fillField('Template Name', 'TempTest')
     I.click('New Attribute')
-
-    //I.fillField('input[type=text]', 'TEMP]') 
-    //locate('div').withAttr({input}).inside(locate('label').withText('Hello'));
     I.fillField(locate('input').withAttr({ name: 'TEMP' }))
     I.selectOption('type', 'dynamic')
     I.selectOption('value_type', 'string')  
@@ -142,23 +141,28 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
 
     
 Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS')
-
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.fillField('current_state', 'estado_atual')
     I.fillField('update_result', 'atualizar_resultado')
-    I.fillField(locate('div').withAttr({upload_image:  'versao_transf'}))
+    I.fillField ('upload_image', 'teste')
     I.fillField('apply_image', 'aplicar_imagem')
     I.fillField("current_version", 'versao_at')
     I.click('Save') 
         I.see('Template successfully updated.')
 })
 
-
-
-
-
-
-
-
+// ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIADOR DE FIRMWARE
+Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+    I.click(locate('a').withAttr({ href: '#/template/list' }));
+    I.click(locate('div').withAttr({title: 'Create a new template'}))
+    I.fillField('Template Name', 'Hab Ger Firmware')
+    I.click('Save')
+        I.see('Template created.')
+        I.wait(3)
+    I.click('Hab Ger Firmware')
+    I.click('Manage Firmware')
+    I.click(locate('.firmware-enabled'));
+    I.click('Save')
+})
 
