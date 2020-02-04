@@ -12,10 +12,9 @@
     "lint:fix": "./node_modules/.bin/eslint src/js/* --fix",
     "test": "./node_modules/.bin/codeceptjs --config=tests/acceptance/codecept.conf.js run --steps",
     "test:clearDb": "./node_modules/.bin/codeceptjs --config=tests/acceptance/custom.conf.js run --steps",
-    "test:Sanity": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Sanity.conf.js run --steps",
-    "test:Tenant": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Tenant.conf.js run --steps",
+    "test:sanity": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Sanity.conf.js run --steps",
+    "test:tenant": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Tenant.conf.js run --steps",
     "test:ManyTenants": "./node_modules/.bin/codeceptjs --config=tests/acceptance/ManyTenants.conf.js run --steps",
-    "test:Language": "./node_modules/.bin/codeceptjs --config=tests/acceptance/lang.conf.js run --steps",
     "perfomaceTests": "tests/acceptance/performanceTests/runTest.sh",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"

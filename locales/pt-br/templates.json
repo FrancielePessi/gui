@@ -50,17 +50,15 @@
   "attribute": "atributo",
   "attributes": "atributos",
   "attr_type": {
-    "label": "Tipo de Atributo"
+    "label": "Attribute Type"
   },
   "value_type": {
-    "label": "Tipo de Valor"
+    "label": "Value Type"
   },
   "template_name": {
-    "label": "Nome do modelo"
-  },
-  "firmware": {
-    "title": "Firmware"
+    "label": "Template Name"
+  }, 
+  "fimware":{
+    "title":"Firmaware"
   }
 }
-
-

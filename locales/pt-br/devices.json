@@ -26,7 +26,20 @@
     "return_list": "Retornar a lista de dispositivos",
     "title_sidebar": {
         "new_attr": "novo atributo",
-        "edit_attr": "editar atributo"
+        "edit_attr": "editar atributo",
+        "default": "gerenciar modelos"
+    },
+
+    "btn": {
+        "new_metadata": {
+            "label": "Novos Metadados"
+        },
+        "new_attr": {
+            "label": "Novo Atributo"
+        },
+        "new_conf": {
+            "label": "Nova Configuração"
+        }
     },
     "device": "dispositivo",
     "selected_templates": "Modelos Selecionados",
@@ -46,4 +59,5 @@
     "no_data_avaliable": "Nenhum dado disponível",
     "device_id": "Identificador do Dispositivo (ID)"
 }
+
 

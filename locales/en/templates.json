@@ -57,6 +57,8 @@
   },
   "template_name": {
     "label": "Template Name"
+  }, 
+  "fimware":{
+    "title":"Firmaware"
   }
 }
-

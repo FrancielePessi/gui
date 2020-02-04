@@ -32,6 +32,10 @@
         "error": ""
       }
     },
+    "groupdescription": {
+      "label": "Descrição",
+      "error": ""
+    },
     "feature": {
       "template": "Template",
       "device": "Dispositivos",

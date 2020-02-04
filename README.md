@@ -60,7 +60,8 @@ To run each scenario, run the following command:
 yarn run test --grep @basic
 yarn run test --grep @adv
 
-yarn run test:Tenant
+yarn run test:tenant
 yarn run test:ManyTenants
-yarn run test:Sanity
+yarn run test:sanity
 ```
+# Language Test

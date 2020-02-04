@@ -67,6 +67,8 @@
         "state": "Device State",
         "update_result": "Result of apply version",
         "transferred": "Last transferred version",
+        "transferring":"Transferring version", 
+        "applying":"Applying version", 
         "upload_image": "Sets which version to transfer",
         "apply_image": "Trigger version update",
         "current_version": "Current version of the image"

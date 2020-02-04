@@ -11,10 +11,11 @@
     "subtitleSuccess": "Todos dados importados.",
     "btnModal": "Ok",
     "btnCancel": "Cancelar",
-    "error": {
+    "error": {  
       "type": "Tipo errado, aceita-se somente JSON!",
       "read": "Erro ao ler arquivo",
-      "file": "Selecione um arquivo"
+      "file": "Selecione um arquivo",
+      "size": "Tamanho do arquivo muito grande"
     }
   },
   "export": {

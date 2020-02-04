@@ -56,8 +56,10 @@
     "default_attrs": {
         "state": "Estado",
         "update_result": "Resultado da atualização da imagem",
-        "transferred": "Última versão transferida",
         "upload_image": "Upload da Imagem",
+        "transferred": "Última versão transferida",
+        "transferring":"Transferindo a versão",
+        "applying": "Aplicando versão",
         "apply_image": "Aplicar Imagem",
         "current_version": "Versão"
     },
