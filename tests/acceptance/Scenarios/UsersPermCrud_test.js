@@ -79,16 +79,53 @@ Scenario('@basic: Creating a news Users', async(I) => {
    I.click(locate('a').withAttr({ href: '#/device'}));
    I.click(locate('a').withAttr({ href: '#/template/list' }));
    I.click(locate('a').withAttr({ href: '#/flows' }));
-   //I.click(locate('a').withAttr({ href: '#/notifications' }));
    I.click(locate('a').withAttr({ href: '#/auth' }));
    I.click(locate('a').withAttr({ href: '#/groups' }));
 
    I.click(locate('div').withAttr({ title: 'Login details' }))
    I.click('.btn-logout')
 })
+
+// Clicar em perfil já criado e remover todas as permissões 
+Scenario('@basic: Remove all permissions', async (I) => {
+   openPage(I)
+   I.click(locate('a').withAttr({ href: '#/groups' }));
+   I.click('franciele')
+   I.uncheckOption('template.viewer')
+   I.uncheckOption('device.viewer')
+   I.uncheckOption('flows.viewer')
+   I.uncheckOption('history.viewer')
+   I.uncheckOption('user.viewer')
+   I.uncheckOption('ca.viewer')
+   I.uncheckOption('user.viewer')
+   I.uncheckOption('permission.viewer')
+   I.click ('Save')
+
+ I.wait(3)
+ I.see('Profile updated.')
+
+ 
+});
+
+Scenario('@basic: login as user with changes', async (I) => {
+   I.click(locate('div').withAttr({ title: 'Login details' }))
+   I.click('.btn-logout')
+
+   I.fillField('username', 'franciele')
+   I.fillField('password', 'temppwd')
+   I.click('Login')  
    
+   I.see('noBold', {css: 'No configured devices.noBold'})
+
+   I.click(locate('div').withAttr({ title: 'Login details' }))
+   I.click('.btn-logout')
+})
+  
 // ************* Excluindo Dados Criados **************
+
+
 Scenario('@basic: Removing user', async (I) => {
+   
    I.click(locate('a').withAttr({ href: '#/auth' }));
    I.click('franciele')
    I.click(locate('.footer button').withAttr ({title: "Remove"}))

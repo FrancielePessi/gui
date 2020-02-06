@@ -84,7 +84,7 @@ Before((login) => {
       I.click( locate('.footer button').withAttr({ title: "Discard" }))
      });
 
-     Scenario('@basic: Testing discard button', async (I) => {
+     Scenario('@basic: Profile: TesteProfile - Testing discard button', async (I) => {
       openPage(I)
 
       I.click('TesteProfile')

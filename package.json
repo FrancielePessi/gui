@@ -14,6 +14,7 @@
     "test:clearDb": "./node_modules/.bin/codeceptjs --config=tests/acceptance/custom.conf.js run --steps",
     "test:sanity": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Sanity.conf.js run --steps",
     "test:tenant": "./node_modules/.bin/codeceptjs --config=tests/acceptance/Tenant.conf.js run --steps",
+    "test:perm": "./node_modules/.bin/codeceptjs --config=tests/acceptance/PerfilPerm.conf.js run --steps",
     "test:ManyTenants": "./node_modules/.bin/codeceptjs --config=tests/acceptance/ManyTenants.conf.js run --steps",
     "perfomaceTests": "tests/acceptance/performanceTests/runTest.sh",
     "snyk-protect": "snyk protect",
