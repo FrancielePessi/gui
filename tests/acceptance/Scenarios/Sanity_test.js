@@ -110,16 +110,20 @@ Scenario('@San: TEMPLATE: EMPTY ATTRIBUTES', async(I) => {
 })
 
 
-// ANALISAR ... 
- /*Scenario('@San:Template: Attributes basic', async(I) =>{
+// ALTERAR TEMPLATE 
+/*Scenario('@San:Template Update', async(I) =>{
     I.click(locate('a').withAttr({href: '#/template/list'}))
     I.click(locate('div').withAttr({title: 'Create a new template'}));
     I.fillField('Template Name', 'TempTest')
     I.click('New Attribute')
-    I.fillField(locate('input').withAttr({ name: 'TEMP' }))
+
+    //I.fillField(locate('div').withText('input-field').inside(locate('name').fillField('TEMPLATE')) )
+    //I,fillField(locate('./input').withAttr({ame: 'TEMP'}))
+    //I.fillField(locate('input').withAttr({ name: 'TEMP' }))
+    //I.fillField
     I.selectOption('type', 'dynamic')
     I.selectOption('value_type', 'string')  
-    I.fillField(locate('div').withText('input').inside(locate('name').withAttr('TEMPLATE')) )
+    
 
     I.click(locate('.footer button').withAttr({title: 'Add'}))
     I.click('Save')
@@ -153,7 +157,7 @@ Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS')
 })
 
 // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIADOR DE FIRMWARE
-Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+Scenario('@San: FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
@@ -166,3 +170,4 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click('Save')
 })
 
+// ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  

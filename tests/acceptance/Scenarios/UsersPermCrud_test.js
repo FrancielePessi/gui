@@ -1,8 +1,3 @@
-/* 
-   TESTE CRIADO PARA ASSOCIAR UM PERFIL AO USUARIO, 
-   E CHECAR SE AS PERMISSÕES DADOS AO NOVO USUARIO 
-   ESTÃO DE ACORDO COM AS PERMISSÕES SELECIONADAS
-*/
 Feature('User CRUD');
 
 Before((login) => 
@@ -106,20 +101,6 @@ Scenario('@basic: Remove all permissions', async (I) => {
 
  
 });
-
-Scenario('@basic: login as user with changes', async (I) => {
-   I.click(locate('div').withAttr({ title: 'Login details' }))
-   I.click('.btn-logout')
-
-   I.fillField('username', 'franciele')
-   I.fillField('password', 'temppwd')
-   I.click('Login')  
-   
-   I.see('noBold', {css: 'No configured devices.noBold'})
-
-   I.click(locate('div').withAttr({ title: 'Login details' }))
-   I.click('.btn-logout')
-})
   
 // ************* Excluindo Dados Criados **************
 
@@ -146,8 +127,3 @@ Scenario ('@basic: Removing perfil - franciele', async (I) => {
    I.wait(3)
    I.see('Profile removed')
 });
-
-
-
-
-  

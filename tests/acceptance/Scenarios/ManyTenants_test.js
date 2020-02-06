@@ -3,9 +3,9 @@ const dataJson = require('../performanceTests/DojotData.json');
 Feature('ManyTenants');
 
 const current = {
-    username: process.env.USERNAME || 'admin',
-    tenant: process.env.TENANT || 'admin',
-    password: process.env.PASSWORD || 'admin',
+    username: 'admin',
+    tenant: 'admin',
+    password: 'admin',
 };
 
 Scenario('Watching a message through flow with import', async (I, Device) => {
