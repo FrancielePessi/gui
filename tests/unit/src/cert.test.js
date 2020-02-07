@@ -15,8 +15,6 @@ function getDeepKeys(obj) {
 }
 
 describe('lang', () => {
-
-
     test ('certificates', () =>{
         const certiicatesPT = require('../../../locales/pt-br/certificates.json');
         const certificatesEN = require('../../../locales/en/certificates.json');
