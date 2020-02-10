@@ -1,23 +1,25 @@
 
 
+//let steps = actor();
+
 // ACESSAR GUI DOJOT
 Feature('Sanity CRUD');
 
 //LOGAR COM O USUARIO ADMIN
-Scenario('@San: LOGIN WITH USER ADMIN', async (I) => {
-Before((login) => {
-   login('admin');
-});
-})
+// Scenario('@San: LOGIN WITH USER ADMIN', async (I) => {
 
-function openPage (I) {
-    I.click(locate('a').withAttr({href: '#/auth'}));
-}
+// })
+
+Before((login) => {
+    login('admin');
+    // I.loginAdmin(I, true) ;
+});
 
 // ADICIONAR UM NOVO USUARIO
 Scenario('@San: ADD A NEW USER', async(I) => {
     //openPage(I)    
     I.click(locate('a').withAttr({ href: '#/auth' }));
+    console.info("TEST LOG");
     I.click(locate('div').withAttr({title: 'Create a new user'}))
     I.fillField('username', 'franpessi')
     I.fillField('name','franciele')
@@ -26,25 +28,25 @@ Scenario('@San: ADD A NEW USER', async(I) => {
     I.selectOption('profile', 'admin')
     I.click( locate('.footer button').withAttr({ title:"Save"}))
   I.see('User created.') 
-  I.wait (3)
+  I.wait (5)
 
 // DETALHES DO USUARIO
 I.seeElement(locate('.card-size').find('div').withAttr({title: 'franciele'}))
 I.seeElement(locate('.card-size').find('div').withAttr({title: 'franpessi'}))
 I.seeElement(locate('.card-size').find('div').withAttr({title: 'fsilva@cpqd.com.br'}))
 
-Scenario ('@San: LOGOUT: USER ADMIN', async(I) => {
+//LOGOUT DO USUARIO ADMIN
 I.click(locate('div').withAttr({ title: 'Login details' }))
 I.click('.btn-logout')
-})
 
-Scenario ('LOIGIN: NEW USER', async(I) => {
+// LOGAR COM O NOVO USUARIO
 I.fillField('username', 'franpessi')
 I.fillField('password', 'temppwd')
 I.click('Login')
 })
 
 // ATUALIZANDO SENHA -----> CADASTRAR SENHA DO USUARIO
+Scenario('@San: UPDATE PASSWORD', async(I) =>{
 I.click(locate('div').withAttr({ title: 'Login details'}))
 I.click('.logout-page-changePassword')
 I.fillField('oldPassword', 'temppwd')
@@ -53,7 +55,6 @@ I.fillField('confirmPassword', 'temppwd1')
 I.click('Save')
     I.see('Password updated')
     I.wait(3)
-
 
 //DESLOGANDO        
 I.click(locate('div').withAttr({ title: 'Login details' }))
@@ -68,16 +69,14 @@ I.wait(3)
 //DESLOGANDO: LOGIN COM O ADMIN
 I.click(locate('div').withAttr({ title: 'Login details'}))
 I.click('.btn-logout')
-I.wait(5)
+I.wait(3)
+
+I.fillField('username', 'admin')
+I.fillField('password', 'admin')
 })
 
-//LOGANDO COM O NOVO USUARIO |  ATUALIZANDO SENHA   |  LOGANDO COM A NOVA SENHA 
-//Scenario('@San: logging in with the new user, updating password and logging in witch the new password', async(I) => { })
-
-//Scenario('@San: Logging in the new password', async(I) =>{})
-
 //ALTERAR CADSTRO DO USUARIO
-Scenario('@San: CHANGE USER REGISTRATION', async(I) => {   
+Scenario('@San: CHANGE USER REGISTRATION', async(I) => {       
 I.click(locate('a').withAttr({ href: '#/auth' }));
 I.click('franciele')
 I.fillField('name', 'FranNavarro')
@@ -103,8 +102,9 @@ Scenario('@San: Delete User', async(I) =>{
 })
 
 //TEMPLATE 
+
 // ADICIONAR TEMPLATE COM GEO
-Scenario('@basic: Creating a template GEO', async (I, Template) => {
+Scenario('@San: Creating a template GEO', async (I, Template) => {
     Template.init(I);
     Template.clickOpenTemplatePage();
     Template.clickCreateNew();
@@ -112,25 +112,33 @@ Scenario('@basic: Creating a template GEO', async (I, Template) => {
 
     Template.addAttr(
         'TEMPGEO',
-        Template.AttributeType.static,
-        Template.AttributeValueType.geo,
-        [],
-        '-22.816916, -47.044647',
+        Template.AttributeType.dynamic,
+        Template.AttributeValueType.geo
+        // ,
+        // '-22.816916, -47.044647',
     );
     Template.clickSave();
     Template.seeTemplateHasCreated();
 });
 
-// ADICIONAR DEVICE ADD TEMPLATE GEO
+
+// ADICIONAR DEVICE - TEMPLATE GEO
 Scenario('@San: DEVICE GEO', async(I) => {
     I.click(locate('a').withAttr({ href: '#/device' }));
-    I.click(locate('a').withAttr({ title: 'Create a new device'}));
-    I.fillField('name', 'SanityGEO')
-    I.click(locate('.button').withAttr('add-template-button'))
+    I.click(locate('div').withAttr({ title: 'Create a new device'}));
+    I.fillField('name', 'GEO')
+    I.click(locate('.add-template-button'));
+    I.click(locate('.template-item').withAttr({ title: 'SanityGEO' }));
+    I.click(locate('.custom-button-default'))
+    I.click('Save')
+       I.see('Device created.')
+      I.click(locate('i').withAttr({ title: 'See details'}));
+       //I.wait(3)
+      I.click(locate('div').withAttr({ title: 'TEMPGEO'})) 
 
-
-})
-
+     // await I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}'); 
+    })
+        
 // ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
 Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
@@ -144,8 +152,10 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('.firmware-enabled'));
     I.click('Save')
 
-    
-Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS')
+})
+ 
+// ATUALIZANDO NOMES DOS PARAMETROS     
+Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.fillField('current_state', 'estado_atual')
@@ -157,7 +167,7 @@ Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS')
         I.see('Template successfully updated.')
 })
 
-// ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIADOR DE FIRMWARE
+// ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
 Scenario('@San: FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
@@ -171,9 +181,51 @@ Scenario('@San: FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click('Save')
 })
 
+// REMOVER TEMPLATE
+Scenario('@San: DELETE TEMPLATE', async(I) => {
+    I.click('Hab Ger Firmware')
+    I.click(locate('.footer button').withAttr ({title: "Remove"}))
+    I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+    I.see('Template removed.')
+})
+
+// ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
+Scenario('@San: FIRMWARE UPDATE - DELETE', async(I) => {
+    I.click(locate('a').withAttr({ href: '#/template/list' }));
+    I.click(locate('div').withAttr({title: 'Create a new template'}))
+    I.fillField('Template Name', 'FWremove')
+    I.click('Save')
+        I.see('Template created.')
+        I.wait(3)
+    I.click('Hab Ger Firmware')
+    I.click('Manage Firmware')
+    I.click(locate('.firmware-enabled'));
+    I.click('Save')
+
+    I.click('FWremove')
+    I.click(locate('.footer button').withAttr ({title: "Remove"}))
+    I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+    I.see('Template removed.')
+})
+
 // ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
+Scenario('@San: Creating: template Binario', async (I, Template) => {
+    I.click(locate('a').withAttr({ href: '#/template/list' }));
+    I.click(locate('div').withAttr({title: 'Create a new template'}))
+    I.fillField('Template Name', 'BINARIO')
+    I.click('Save')
+        I.see('Template created.')
+        I.wait(3)
+})
 
-
+//ASSOCIANDO BINARIO AO TEMPLATE
+Scenario('@San: ASSOCIATING BINARY0 - TEMPLATE', async(I) => {
+    I.click('BINARIO')
+    I.click('Manage Firmware')
+    I.click('Manage Images')
+    I.click(locate('.body-form-nodata clickable'))
+    I.click('Save')
+})
 
 // FLUXO
 Scenario('@basic: Creating a simple flow', async (I, Flow, Device, Notification) => {
@@ -231,17 +283,19 @@ Scenario('@basic: Creating a simple flow', async (I, Flow, Device, Notification)
     await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
     I.wait(5);
 
+    
     Device.shouldSeeMessage('output value');
-
     await Notification.openNotificationsPage();
     const totalBefore = await Notification.totalOfMessagesWithText('output value');
-    //const totalBefore = await Notification.totalOfMessagesWithText('Texto');
     await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
-    I.wait(5);
-
-    await Notification.shouldISeeMessagesWithText('output value', totalBefore + 1); 
-    //await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 1); 
+    await Notification.shouldISeeMessagesWithText('output value', totalBefore + 1);     
 });
 
+
+
+// OUTRO TENANT 
+Scenario('@San: Other Tenant', async(I) => {
+
+})
 
 

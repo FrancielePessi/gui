@@ -115,7 +115,7 @@ module.exports = {
         I.click(this.ButtonLabel.save);
     },
 
-    addAttr(fieldValue, attrType, attrValueType, metaDataArray, value = '') {
+    addAttr(fieldValue, attrType, attrValueType, metaDataArray=[], value = '') {
         this._clickOpenFooterBtnNew('New Attribute');
         this._fillAttrForm(fieldValue, attrType, attrValueType, value);
         this._metasArrayToAddUpdateRemove(metaDataArray);

@@ -7,7 +7,11 @@ const config = {
     output: './output',
     multiple: {
         parallel: {
-            chunks: 1,
+            chunks: process.env.THREADS || 30,
+            // browsers: [
+            //     // { browser: 'chrome', windowSize: '1920x1080',}, 
+            //      { browser: 'firefox', windowSize: '1920x1080',},
+            // ],
         },
     },
     helpers: {
@@ -15,6 +19,7 @@ const config = {
             url: env.dojot_host,
             keepCookies: true,
             fullPageScreenshots: true,
+            //browser: 'firefox',
             restart: false,
             keepBrowserState: true,
             show: true,
@@ -56,7 +61,8 @@ const config = {
                 admin: {
                     login: (I) => {
                         I.loginAdmin(I, config.clearDb);
-                    },
+                    }
+                    ,
                     check: (I) => {
                         I.amOnPage(`${env.dojot_host}/#/`);
                         I.see('admin');

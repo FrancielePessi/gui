@@ -5,7 +5,7 @@ const env = {
     
     // Ambiente localhost
     //dojot_host: process.env.DOJOT_HOST || 'http://localhost:8000',
-    //mqtt_host: process.env.MQTT_HOST || 'http://localhost',
+    //mqtt_host: process.env.MQTT_HOST || 'http://localhost:1883',
 
 };
 

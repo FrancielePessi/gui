@@ -116,12 +116,8 @@
     "webpack-dev-server": "^3.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
     "allure-commandline": "^2.9.0",
     "async-mqtt": "^2.2.1",
-    "babel-jest": "^25.1.0",
     "child_process": "^1.0.2",
     "codeceptjs": "^2.0.8",
     "eslint": "^5.5.0",
