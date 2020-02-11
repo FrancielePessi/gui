@@ -6,13 +6,13 @@ const config = {
    clearDb: false,
     output: './output',
     multiple: {
-        parallel: {
-            chunks: process.env.THREADS || 30,
-            browsers: [
-                { browser: 'firefox', windowSize: '1920x1080',},
-                { browser: 'chrome', windowSize: '1920x1080',}, 
+       parallel: {
+        chunks: process.env.THREADS || 30,
+        browsers: [
+            { browser: 'firefox', windowSize: '1920x1080',},
+            {browser: 'chrome', windowSize: '1920x1080',}
                  
-            ],
+          ],
         },
     },
     helpers: {
@@ -23,7 +23,7 @@ const config = {
             browser: process.env.BROWSER || 'firefox',   
             restart: false,
             keepBrowserState: true,
-            show: true,
+            show: false,
             //waitForNavigation: ['networkidle2', 'domcontentloaded'],
             chrome: {
                 //args: ['--no-sandbox', '--start-maximized', '--start-fullscreen'],
