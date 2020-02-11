@@ -27,62 +27,63 @@ Scenario('@San: ADD A NEW USER', async(I) => {
     I.fillField('confirmEmail','fsilva@cpqd.com.br')
     I.selectOption('profile', 'admin')
     I.click( locate('.footer button').withAttr({ title:"Save"}))
-  I.see('User created.') 
-  I.wait (5)
+    I.see('User created.') 
+    I.wait (5)
 
-// DETALHES DO USUARIO
-I.seeElement(locate('.card-size').find('div').withAttr({title: 'franciele'}))
-I.seeElement(locate('.card-size').find('div').withAttr({title: 'franpessi'}))
-I.seeElement(locate('.card-size').find('div').withAttr({title: 'fsilva@cpqd.com.br'}))
+    // DETALHES DO USUARIO
+    I.seeElement(locate('.card-size').find('div').withAttr({title: 'franciele'}))
+    I.seeElement(locate('.card-size').find('div').withAttr({title: 'franpessi'}))
+    I.seeElement(locate('.card-size').find('div').withAttr({title: 'fsilva@cpqd.com.br'}))
 
-//LOGOUT DO USUARIO ADMIN
-I.click(locate('div').withAttr({ title: 'Login details' }))
-I.click('.btn-logout')
+    //LOGOUT DO USUARIO ADMIN
+    I.click(locate('div').withAttr({ title: 'Login details' }))
+    I.click('.btn-logout')
 
-// LOGAR COM O NOVO USUARIO
-I.fillField('username', 'franpessi')
-I.fillField('password', 'temppwd')
-I.click('Login')
+    // LOGAR COM O NOVO USUARIO
+    I.fillField('username', 'franpessi')
+    I.fillField('password', 'temppwd')
+    I.click('Login')
+
 })
 
 // ATUALIZANDO SENHA -----> CADASTRAR SENHA DO USUARIO
 Scenario('@San: UPDATE PASSWORD', async(I) =>{
-I.click(locate('div').withAttr({ title: 'Login details'}))
-I.click('.logout-page-changePassword')
-I.fillField('oldPassword', 'temppwd')
-I.fillField('password', 'temppwd1')
-I.fillField('confirmPassword', 'temppwd1')
-I.click('Save')
+    I.click(locate('div').withAttr({ title: 'Login details'}))
+    I.click('.logout-page-changePassword')
+    I.fillField('oldPassword', 'temppwd')
+    I.fillField('password', 'temppwd1')
+    I.fillField('confirmPassword', 'temppwd1')
+    I.click('Save')
     I.see('Password updated')
     I.wait(3)
 
-//DESLOGANDO        
-I.click(locate('div').withAttr({ title: 'Login details' }))
-I.click('.btn-logout')
+    //DESLOGANDO        
+    I.click(locate('div').withAttr({ title: 'Login details' }))
+    I.click('.btn-logout')
 
-//LOGANDO COM A NOVA SENHA   
-I.fillField('username', 'franpessi')
-I.fillField('password', 'temppwd1')
-I.click('Login')
-I.wait(3)
+    //LOGANDO COM A NOVA SENHA   
+    I.fillField('username', 'franpessi')
+    I.fillField('password', 'temppwd1')
+    I.click('Login')
+    I.wait(3)
 
-//DESLOGANDO: LOGIN COM O ADMIN
-I.click(locate('div').withAttr({ title: 'Login details'}))
-I.click('.btn-logout')
-I.wait(3)
+    //DESLOGANDO: LOGIN COM O ADMIN
+    I.click(locate('div').withAttr({ title: 'Login details'}))
+    I.click('.btn-logout')
+    I.wait(3)
 
-I.fillField('username', 'admin')
-I.fillField('password', 'admin')
+    I.fillField('username', 'admin')
+    I.fillField('password', 'admin')
 })
 
 //ALTERAR CADSTRO DO USUARIO
 Scenario('@San: CHANGE USER REGISTRATION', async(I) => {       
-I.click(locate('a').withAttr({ href: '#/auth' }));
-I.click('franciele')
-I.fillField('name', 'FranNavarro')
-I.fillField('email', 'navarro@noemail.com.br')
-I.fillField('confirmEmail', 'navarro@noemail.com.br')
-I.click('Save')
+    I.click(locate('a').withAttr({ href: '#/auth' }));
+    I.click('franciele')
+    I.fillField('name', 'FranNavarro')
+    I.fillField('email', 'navarro@noemail.com.br')
+    I.fillField('confirmEmail', 'navarro@noemail.com.br')
+    I.click('Save')
     I.see('User updated.')
     I.wait(3)
 
@@ -97,8 +98,8 @@ Scenario('@San: Delete User', async(I) =>{
     I.click('FranNavarro')
     I.click(locate('.footer button').withAttr ({title: "Remove"}))
     I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
-        I.see('User removed.')
-        I.wait(3)
+    I.see('User removed.')
+    I.wait(3)
 })
 
 //TEMPLATE 
@@ -131,13 +132,14 @@ Scenario('@San: DEVICE GEO', async(I) => {
     I.click(locate('.template-item').withAttr({ title: 'SanityGEO' }));
     I.click(locate('.custom-button-default'))
     I.click('Save')
-       I.see('Device created.')
-      I.click(locate('i').withAttr({ title: 'See details'}));
-       //I.wait(3)
-      I.click(locate('div').withAttr({ title: 'TEMPGEO'})) 
+    I.see('Device created.')
+    I.click(locate('i').withAttr({ title: 'See details'}));
+    I.wait(3)
+    I.click(locate('div').withAttr({ title: 'TEMPGEO'})) 
 
-     // await I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}'); 
-    })
+    await I.sendMQTTMessage(deviceI, '{"TEMPGEO": "-22.890970, -47.063006"}'); 
+    
+})
         
 // ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
 Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
@@ -145,8 +147,8 @@ Scenario('@San: FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
     I.click('Save')
-        I.see('Template created.')
-        I.wait(3)
+    I.see('Template created.')
+    I.wait(3)
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.click(locate('.firmware-enabled'));
@@ -164,7 +166,7 @@ Scenario('@San: FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
     I.fillField('apply_image', 'aplicar_imagem')
     I.fillField("current_version", 'versao_at')
     I.click('Save') 
-        I.see('Template successfully updated.')
+    I.see('Template successfully updated.')
 })
 
 // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
@@ -173,8 +175,8 @@ Scenario('@San: FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
     I.click('Save')
-        I.see('Template created.')
-        I.wait(3)
+    I.see('Template created.')
+    I.wait(3)
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.click(locate('.firmware-enabled'));
@@ -195,8 +197,8 @@ Scenario('@San: FIRMWARE UPDATE - DELETE', async(I) => {
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'FWremove')
     I.click('Save')
-        I.see('Template created.')
-        I.wait(3)
+    I.see('Template created.')
+    I.wait(3)
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.click(locate('.firmware-enabled'));
@@ -214,8 +216,8 @@ Scenario('@San: Creating: template Binario', async (I, Template) => {
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'BINARIO')
     I.click('Save')
-        I.see('Template created.')
-        I.wait(3)
+    I.see('Template created.')
+    I.wait(3)
 })
 
 //ASSOCIANDO BINARIO AO TEMPLATE

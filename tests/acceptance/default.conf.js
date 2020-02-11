@@ -8,10 +8,11 @@ const config = {
     multiple: {
         parallel: {
             chunks: process.env.THREADS || 30,
-            // browsers: [
-            //     // { browser: 'chrome', windowSize: '1920x1080',}, 
-            //      { browser: 'firefox', windowSize: '1920x1080',},
-            // ],
+            browsers: [
+                { browser: 'firefox', windowSize: '1920x1080',},
+                { browser: 'chrome', windowSize: '1920x1080',}, 
+                 
+            ],
         },
     },
     helpers: {
@@ -19,11 +20,11 @@ const config = {
             url: env.dojot_host,
             keepCookies: true,
             fullPageScreenshots: true,
-            //browser: 'firefox',
+            browser: process.env.BROWSER || 'firefox',   
             restart: false,
             keepBrowserState: true,
             show: true,
-            waitForNavigation: ['networkidle2', 'domcontentloaded'],
+            //waitForNavigation: ['networkidle2', 'domcontentloaded'],
             chrome: {
                 //args: ['--no-sandbox', '--start-maximized', '--start-fullscreen'],
                 args: ['--no-sandbox', '--start-maximized'],
@@ -33,6 +34,11 @@ const config = {
                     width: 1280,
                     height: 720,
                 },
+            },
+            firefox: {
+                args: [
+                    '--ignore-certificate-errors'
+                ],
             },
         },
         REST: {
