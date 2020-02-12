@@ -1,5 +1,4 @@
 
-
 //let steps = actor();
 
 // ACESSAR GUI DOJOT
@@ -12,7 +11,6 @@ Feature('Sanity CRUD');
 
 Before((login) => {
     login('admin');
-    // I.loginAdmin(I, true) ;
 });
 
 // ADICIONAR UM NOVO USUARIO
@@ -124,7 +122,6 @@ Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
 
 // ADICIONAR DEVICE - TEMPLATE GEO
 Scenario('@San: 6° DEVICE GEO', async(I) => {
-    const deviceId = require ('../../steps_file')
     I.click(locate('a').withAttr({ href: '#/device' }));
     I.click(locate('div').withAttr({ title: 'Create a new device'}));
     I.fillField('name', 'GEO')
@@ -135,15 +132,35 @@ Scenario('@San: 6° DEVICE GEO', async(I) => {
     I.see('Device created.')
     I.click(locate('i').withAttr({ title: 'See details'}));
     I.wait(3)
-
-
     I.click(locate('div').withAttr({ title: 'TEMPGEO'})) 
-    await I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.817209, -47.045996"}');
+})
+
+// ENVIAR DADOS MQTT
+Scenario('@San: 7° PUBLISH DATA', async(I) => {
+    const I = require ('../../steps_file/sendMQTTMessage')
+
+    await I.sendMQTTMessage(I, '{"TEMPGEO": "-22.817209, -47.045996"}');
     I.wait(5);
 })
 
+//  ALTERAR DEVICE 
+Scenario('@San: 8° UPDATE DEVICE', async(I) => {
+    I.click(locate('a').withAttr({ href: '#/device' }));
+    I.click('SanityGEO')
+
+    I.fillField('UpdateDevive')
+    I.click('Save')
+})
+
+//APLICAR FILTRO NA CONSULTA DE DEVICES CADASTRADOS
+Scenario('@San: 9° APPLY FILTER IN THE CONSULTATION OF REGISTERED DEVICES', async(I) => {
+    I.click(locate('a').withAttr({ href: '#/device' }));
+   // I.click(locate('i').withAttr({ href: 'fa fa-search' }));
+   I.click('.fa fa-search')
+})
+
 // ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
-Scenario('@San: 7° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+Scenario('@San: 10° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
@@ -157,7 +174,7 @@ Scenario('@San: 7° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
 })
  
 // ATUALIZANDO NOMES DOS PARAMETROS     
-Scenario('@San: 8° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
+Scenario('@San: 11° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.fillField('current_state', 'estado_atual')
@@ -170,7 +187,7 @@ Scenario('@San: 8° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) =
 })
 
 // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
-Scenario('@San: 9° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
+Scenario('@San: 12° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
@@ -184,7 +201,7 @@ Scenario('@San: 9° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
 })
 
 // REMOVER TEMPLATE
-Scenario('@San: 10° DELETE TEMPLATE', async(I) => {
+Scenario('@San: 13° DELETE TEMPLATE', async(I) => {
     I.click('Hab Ger Firmware')
     I.click(locate('.footer button').withAttr ({title: "Remove"}))
     I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
@@ -192,7 +209,7 @@ Scenario('@San: 10° DELETE TEMPLATE', async(I) => {
 })
 
 // ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
-Scenario('@San: 11° FIRMWARE UPDATE - DELETE', async(I) => {
+Scenario('@San: 14° FIRMWARE UPDATE - DELETE', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'FWremove')
@@ -211,7 +228,7 @@ Scenario('@San: 11° FIRMWARE UPDATE - DELETE', async(I) => {
 })
 
 // ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
-Scenario('@San: 12° Creating: template Binario', async (I, Template) => {
+Scenario('@San: 15° Creating: template Binario', async (I, Template) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'BINARIO')
@@ -221,7 +238,7 @@ Scenario('@San: 12° Creating: template Binario', async (I, Template) => {
 })
 
 //ASSOCIANDO BINARIO AO TEMPLATE
-Scenario('@San: 13° ASSOCIATING BINARY0 - TEMPLATE', async(I) => {
+Scenario('@San: 16° ASSOCIATING BINARY0 - TEMPLATE', async(I) => {
     I.click('BINARIO')
     I.click('Manage Firmware')
     I.click('Manage Images')
@@ -231,7 +248,7 @@ Scenario('@San: 13° ASSOCIATING BINARY0 - TEMPLATE', async(I) => {
 
 
 // FLUXO
-Scenario('@basic: 14° Creating a simple flow', async (I, Flow, Device, Notification) => {
+Scenario('@basic: 17° Creating a simple flow', async (I, Flow, Device, Notification) => {
     Flow.init(I);
     const deviceId = await Flow.createDevice();
 
@@ -297,7 +314,7 @@ Scenario('@basic: 14° Creating a simple flow', async (I, Flow, Device, Notifica
 
 
 // OUTRO TENANT 
-Scenario('@San: 15° Other Tenant', async(I) => {
+Scenario('@San: 18° Other Tenant', async(I) => {
 
 })
 
