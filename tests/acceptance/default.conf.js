@@ -20,10 +20,10 @@ const config = {
             url: env.dojot_host,
             keepCookies: true,
             fullPageScreenshots: true,
-            browser: process.env.BROWSER || 'firefox',   
+           // browser: process.env.BROWSER || 'firefox',   
             restart: false,
             keepBrowserState: true,
-            show: false,
+            show: true,
             //waitForNavigation: ['networkidle2', 'domcontentloaded'],
             chrome: {
                 //args: ['--no-sandbox', '--start-maximized', '--start-fullscreen'],
