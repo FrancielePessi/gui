@@ -169,6 +169,4 @@ module.exports = {
         await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
         await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
     },
-
-
 };

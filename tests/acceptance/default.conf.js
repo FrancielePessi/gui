@@ -41,6 +41,9 @@ const config = {
                 ],
             },
         },
+        MyHelper: {
+          require: './getPageUr.js'
+        },
         REST: {
             endpoint: env.dojot_host,
         },

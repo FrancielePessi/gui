@@ -159,6 +159,20 @@ module.exports = {
         I.seeElement(locate('.card-size').find('span').withAttr({ title: name }));
     },
 
+    getIdByCard(name) {
+        const localCard = locate('.card-size').find('span').withAttr({ title: name });
+
+        const localCard2 = localCard.withDescendant('.title-text');
+
+        console.log(localCard2);
+
+        console.log(locate(localCard2).find('a'));
+
+        
+
+        //subir um div e entrar em outra com .title-edit e pegar o href do a
+    },
+
     checkNonExistCard(name) {
         I.dontSeeElement(locate('.card-size').find('span').withAttr({ title: name }));
     },
@@ -171,6 +185,10 @@ module.exports = {
 
     clickDetailsDevice(deviceId) {
         I.click(locate('a').withAttr({ href: `#/device/id/${deviceId}/detail` }));
+    },
+
+    clickDetailsDeviceGeo(name){
+        I.click(locate('div').withAttr({ title: name}))
     },
 
     selectAttr(attr) {
