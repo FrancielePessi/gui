@@ -22,6 +22,25 @@ module.exports = {
         this.clickSave();
     },
 
+    fillAndSaveSanity(user) {
+        I.fillField('username', user.username);
+        I.fillField('name', user.name);
+        I.fillField('email', user.email);
+        I.fillField('confirmEmail', user.email);
+        I.selectOption('profile', user.profile);
+        I.click('Save');
+    },
+
+    updateUserNameAndEmailSanity(update){
+        //I.click(locate('div').withAttr({title: name}))
+        I.fillField('name', update.name);
+        I.fillField('email', update.email);
+        I.fillField('confirmEmail', update.email);
+        I.click('Save')
+        I.see('User updated.')
+        I.wait(3)
+    },
+
     clickCreateNew() {
         I.waitForElement(locate('div').withAttr({ title: 'Create a new user' }));
         I.click(locate('div').withAttr({ title: 'Create a new user' }));
@@ -31,6 +50,30 @@ module.exports = {
         I.wait(1);
         I.waitForElement(locate('a').withAttr({ href: '#/auth' }));
         I.click(locate('a').withAttr({ href: '#/auth' }));
+    },
+
+    clickUserCreated(name){
+        I.click(locate('div').withAttr({title: name}))
+    },
+
+    logoutUser(){
+        I.click(locate('div').withAttr({ title: 'Login details' }))
+        I.click('.btn-logout')
+    },
+
+    loginNewUser(username, password){
+        I.fillField('username', username)
+        I.fillField('password', password)
+        I.click('Login')
+    },
+
+    updatePasswordSanity(oldPassword, newPassword, confirmPassword){
+        I.click(locate('div').withAttr({ title: 'Login details' }))
+        I.click('.logout-page-changePassword')
+        I.fillField('oldPassword', oldPassword)
+        I.fillField('password', newPassword)
+        I.fillField('confirmPassword', confirmPassword)
+        I.click('Save')
     },
 
     clickSave() {

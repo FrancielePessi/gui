@@ -51,6 +51,10 @@ module.exports = {
         I.click(locate('.sidebar-button').withAttr({ title: attributeType, role: 'button' }));
     },
 
+    clickDeviceCreated(name){
+        I.click(name)
+    },
+
     seeAllConfigurations(arrayConfigurations) {
         arrayConfigurations.forEach((config) => {
             I.seeElement(locate('input').withAttr({ value: Util.toString(config.static_value) }).before(locate('label').withText(Util.uppercaseFirstLetter(config.label))));
@@ -199,10 +203,10 @@ module.exports = {
         I.wait(1);
     },
 
-    clickMapSatelite(){
-        I.checkOption(locate('leaflet-control-layers-selector div').find('.input').withAttr({nome: 'leaflet-base-layers_36'}));
-        I.wait(10)
-    },
+    // clickMapSatelite(){
+    //     I.checkOption(locate('leaflet-control-layers-selector div').find('.input').withAttr({nome: 'leaflet-base-layers_36'}));
+    //     I.wait(10)
+    // },
 
     selectAttr(attr) {
         I.click(locate('div').withAttr({ title: attr }));

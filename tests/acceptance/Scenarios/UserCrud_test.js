@@ -22,7 +22,6 @@ const admin_data = {
     profile: 'admin',
 };
 
-
 function checkingUser(I, data) {
     I.seeInputByNameAndValue('username', data.username);
     I.seeInputByNameAndValue('name', data.name);

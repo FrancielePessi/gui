@@ -4,86 +4,78 @@ Before((login) => {
     login('admin');
 });
 
+const user_data = {
+    id: null,
+    username: 'franpessi',
+    name: 'franciele',
+    email: `fsilva@cpqd.com.br`,
+    profile: 'admin',
+};
+
+const update_user = {
+    id: null,
+    name: 'FranNavarro',
+    email: `navarro@noemail.com.br`,
+    confirmEmail: `navarro@noemail.com.br`,
+}
+
+const checkingUpdate_user = {
+    id: null,
+    username: 'franpessi',
+    name: 'FranNavarro',
+    email: `navarro@noemail.com.br`,
+    confirmEmail: `navarro@noemail.com.br`,
+    profile: 'admin',
+}
+
+function checkingUser(I, data) {
+    I.seeInputByNameAndValue('username', data.username);
+    I.seeInputByNameAndValue('name', data.name);
+    I.seeInputByNameAndValue('email', data.email);
+    I.seeInputByNameAndValue('confirmEmail', data.email);
+    I.seeSelectOptionByNameAndValue('profile', data.profile);
+}
+
+function checkingUpdateUser(I, data) {
+    I.seeInputByNameAndValue('username', data.username);
+    I.seeInputByNameAndValue('name', data.name);
+    I.seeInputByNameAndValue('email', data.email);
+    I.seeInputByNameAndValue('confirmEmail', data.email);
+    I.seeSelectOptionByNameAndValue('profile', data.profile);
+}
+
 //ADICIONAR UM NOVO USUARIO
-Scenario('@San: 1° ADD A NEW USER', async(I) => {    
-    I.click(locate('a').withAttr({ href: '#/auth' }));
-    I.click(locate('div').withAttr({title: 'Create a new user'}))
-    I.fillField('username', 'franpessi')
-    I.fillField('name','franciele')
-    I.fillField('email','fsilva@cpqd.com.br')
-    I.fillField('confirmEmail','fsilva@cpqd.com.br')
-    I.selectOption('profile', 'admin')
-    I.click( locate('.footer button').withAttr({ title:"Save"}))
-    I.see('User created.') 
-    I.wait (5)
-
-    // ("DETAILS THE USER");
-    I.seeElement(locate('.card-size').find('div').withAttr({title: 'franciele'}))
-    I.seeElement(locate('.card-size').find('div').withAttr({title: 'franpessi'}))
-    I.seeElement(locate('.card-size').find('div').withAttr({title: 'fsilva@cpqd.com.br'}))
-
-    // ("LOGOUT - USER ADMIN")
-    I.click(locate('div').withAttr({ title: 'Login details' }))
-    I.click('.btn-logout')
-
-    // ("LOGIN - NEW USER")     
-    I.fillField('username', 'franpessi')
-    I.fillField('password', 'temppwd')
-    I.click('Login')
-
-})
-
-// ATUALIZANDO SENHA -----> CADASTRAR SENHA DO USUARIO
-Scenario('@San: 2° UPDATE PASSWORD', async(I) => {
-    I.click(locate('div').withAttr({ title: 'Login details'}))
-    I.click('.logout-page-changePassword')
-    I.fillField('oldPassword', 'temppwd')
-    I.fillField('password', 'temppwd1')
-    I.fillField('confirmPassword', 'temppwd1')
-    I.click('Save')
+Scenario('@San: 1° ADD A NEW USER', async(I, User, Commons) => {    
+    User.openUserPage();
+    User.clickCreateNew();
+    User.fillAndSaveSanity(user_data);
+    Commons.clickCardByName('franciele');
+    checkingUser(I, user_data);
+    User.logoutUser();
+    User.loginNewUser('franpessi', 'temppwd')
+    User.updatePasswordSanity('temppwd', 'temppwd1', 'temppwd1')
     I.see('Password updated')
-    I.wait(3)
-
-    // ('LOGOUT')        
-    I.click(locate('div').withAttr({ title: 'Login details' }))
-    I.click('.btn-logout')
-
-    // ('LOGIN WITH THE NEW PASSWORD')   
-    I.fillField('username', 'franpessi')
-    I.fillField('password', 'temppwd1')
-    I.click('Login')
-    I.wait(3)
-
-    //DESLOGANDO: LOGIN COM O ADMIN
-    I.click(locate('div').withAttr({ title: 'Login details'}))
-    I.click('.btn-logout')
-    I.wait(3)
-    I.fillField('username', 'admin')
-    I.fillField('password', 'admin')
 })
 
 //ALTERAR CADASTRO DO USUARIO
-Scenario('@San: 3° CHANGE USER REGISTRATION', async(I) => {       
-    I.click(locate('a').withAttr({ href: '#/auth' }));
-    I.click('franciele')
-    I.fillField('name', 'FranNavarro')
-    I.fillField('email', 'navarro@noemail.com.br')
-    I.fillField('confirmEmail', 'navarro@noemail.com.br')
-    I.click('Save')
-    I.see('User updated.')
-    I.wait(3)
-
-    //DETALHES DA ATUALIZAÇÃO DE USUARIO
-    I.seeElement(locate('.card-size').find('div').withAttr({ title: 'FranNavarro' }));
-    I.seeElement(locate('.card-size').find('div').withAttr({ title: 'navarro@noemail.com.br' }));
+Scenario('@San: 2° CHANGE USER REGISTRATION', async (User, Commons, I) => {       
+    User.openUserPage();
+    User.clickUserCreated('franciele')
+    User.updateUserNameAndEmailSanity(update_user)
+    Commons.clickCardByName('FranNavarro');
+    checkingUpdateUser(I, checkingUpdate_user);
+    
 })      
 
 // REMOVER USUÁRIO
-Scenario('@San: 4° Delete User', async(I) =>{
-    I.click(locate('a').withAttr({ href: '#/auth' }));
-    I.click('FranNavarro')
-    I.click(locate('.footer button').withAttr ({title: "Remove"}))
-    I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+Scenario('@San: 3° Delete User', async (User, I) =>{
+    User.logoutUser();
+    User.loginNewUser('admin', 'admin')
+    User.openUserPage();
+    User.clickUserCreated('FranNavarro')
+    User.clickRemove();
+    User.confirmRemove();
+   // I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
     I.see('User removed.')
     I.wait(3)
 })
@@ -91,7 +83,7 @@ Scenario('@San: 4° Delete User', async(I) =>{
  
 
 // ADICIONAR TEMPLATE COM GEO
-Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
+Scenario('@San: 4° Creating a template GEO', async (I, Template) => {
 
     Template.init(I);
     Template.clickOpenTemplatePage();
@@ -107,15 +99,16 @@ Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
     Template.seeTemplateHasCreated();
 });
 
-Scenario('@San: Device Create', async(I, Device) => {
+Scenario('@San: 5° Device Create', async(I, Device) => {
     Device.init(I);    
     Device.clickOpenDevicePage();
     Device.clickCreateNew();
-    I.fillField('name', 'GEO')
+    Device.fillNameDevice('GEO')
     Device.clickAddOrRemoveTemplate();
     Device.clickToSelectTemplate('SanityGEO');
     Device.clickBack();
     Device.clickSave();
+    Device.checkExistCard('GEO')
 })
 
 /*
@@ -123,7 +116,7 @@ Scenario('@San: Device Create', async(I, Device) => {
    ou qualquer outra string.
    http://localhost:8000/#/device/id/45b768/detail 
  */
-Scenario('@San: SEND DATA - MQTT', async(I, Device) => {
+Scenario('@San: 6° SEND DATA - MQTT', async(I, Device) => {
     Device.checkExistCard('GEO');
     Device.clickDetailsDeviceDefault();
     Device.clickDynamicAttributes('TEMPGEO');
@@ -137,7 +130,7 @@ Scenario('@San: SEND DATA - MQTT', async(I, Device) => {
 })
 
 //ZOOM + | ZOOM -
-Scenario('San: (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
+Scenario('San: 7° (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
     Device.clickDetailsDeviceDefault();
     Device.clickDynamicAttributes('TEMPGEO')
 
@@ -150,120 +143,123 @@ Scenario('San: (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
     Device.clickZoomOut();
 
     //Selecionar satelite
-    Device.clickMapSatelite();
+   // Device.clickMapSatelite();
 })
 
-//ALTERAR DEVICE - NAME 
-Scenario('@San: 8° UPDATE DEVICE', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/device' }));
-    I.click('SanityGEO')
-    I.fillField('UpdateDevice')
-    I.click('Save')
-})
+// //ALTERAR DEVICE - NAME 
+// Scenario('@San: 8° UPDATE DEVICE', async(I, Device) => {
+//     Device.clickOpenDevicePage();
+//     Device.clickDeviceCreated('GEO')
+//     Device.fillNameDevice('UpdateDeviceGEO')
+//     Device.clickSave(); 
+//     I.see('Device updated.')
+//         I.wait(3)
+         
+// })
 
-//APLICAR FILTRO NA CONSULTA DE DEVICES CADASTRADOS
-Scenario('@San: 9° APPLY FILTER IN THE CONSULTATION OF REGISTERED DEVICES', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/device' }));
-    // I.click(locate('i').withAttr({ href: 'fa fa-search' }));
-    I.click('.fa fa-search')
-})
+// //APLICAR FILTRO NA CONSULTA DE DEVICES CADASTRADOS
+// Scenario('@San: 9° APPLY FILTER IN THE CONSULTATION OF REGISTERED DEVICES', async(I) => {
+//     I.click(locate('a').withAttr({ href: '#/device' }));
+//     // I.click(locate('i').withAttr({ href: 'fa fa-search' }));
+//     I.click('.fa fa-search')
+// })
 
-// ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
-Scenario('@San: 10° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/template/list' }));
-    I.click(locate('div').withAttr({title: 'Create a new template'}))
-    I.fillField('Template Name', 'Hab Ger Firmware')
-    I.click('Save')
-    I.see('Template created.')
-    I.wait(3)
-    I.click('Hab Ger Firmware')
-    I.click('Manage Firmware')
-    I.click(locate('.firmware-enabled'));
-    I.click('Save')
-})
+// // ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
+// Scenario('@San: 10° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+//     I.click(locate('a').withAttr({ href: '#/template/list' }));
+//     I.click(locate('div').withAttr({title: 'Create a new template'}))
+//     I.fillField('Template Name', 'Hab Ger Firmware')
+//     I.click('Save')
+//     I.see('Template created.')
+//     I.wait(3)
+//     I.click('Hab Ger Firmware')
+//     I.click('Manage Firmware')
+//     I.click(locate('.firmware-enabled'));
+//     I.click('Save')
+// })
  
-// ATUALIZANDO NOMES DOS PARAMETROS     
-Scenario('@San: 11° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
-    I.click('Hab Ger Firmware')
-    I.click('Manage Firmware')
-    I.fillField('current_state', 'estado_atual')
-    I.fillField('update_result', 'atualizar_resultado')
-    I.fillField ('upload_image', 'teste')
-    I.fillField('apply_image', 'aplicar_imagem')
-    I.fillField("current_version", 'versao_at')
-    I.click('Save') 
-    I.see('Template successfully updated.')
-})
+// // ATUALIZANDO NOMES DOS PARAMETROS     
+// Scenario('@San: 11° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
+//     I.click('Hab Ger Firmware')
+//     I.click('Manage Firmware')
+//     I.fillField('current_state', 'estado_atual')
+//     I.fillField('update_result', 'atualizar_resultado')
+//     I.fillField ('upload_image', 'teste')
+//     I.fillField('apply_image', 'aplicar_imagem')
+//     I.fillField("current_version", 'versao_at')
+//     I.click('Save') 
+//     I.see('Template successfully updated.')
+// })
 
-// ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
-Scenario('@San: 12° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/template/list' }));
-    I.click(locate('div').withAttr({title: 'Create a new template'}))
-    I.fillField('Template Name', 'Hab Ger Firmware')
-    I.click('Save')
-    I.see('Template created.')
-    I.wait(3)
-    I.click('Hab Ger Firmware')
-    I.click('Manage Firmware')
-    I.click(locate('.firmware-enabled'));
-    I.click('Save')
-})
+// // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
+// Scenario('@San: 12° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
+//     I.click(locate('a').withAttr({ href: '#/template/list' }));
+//     I.click(locate('div').withAttr({title: 'Create a new template'}))
+//     I.fillField('Template Name', 'Hab Ger Firmware')
+//     I.click('Save')
+//     I.see('Template created.')
+//     I.wait(3)
+//     I.click('Hab Ger Firmware')
+//     I.click('Manage Firmware')
+//     I.click(locate('.firmware-enabled'));
+//     I.click('Save')
+// })
 
-// REMOVER TEMPLATE
-Scenario('@San: 13° DELETE TEMPLATE', async(I) => {
-    I.click('Hab Ger Firmware')
-    I.click(locate('.footer button').withAttr ({title: "Remove"}))
-    I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
-    I.see('Template removed.')
-})
+// // REMOVER TEMPLATE
+// Scenario('@San: 13° DELETE TEMPLATE', async(I) => {
+//     I.click('Hab Ger Firmware')
+//     I.click(locate('.footer button').withAttr ({title: "Remove"}))
+//     I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+//     I.see('Template removed.')
+// })
 
-// ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
-Scenario('@San: 14° FIRMWARE UPDATE - DELETE', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/template/list' }));
-    I.click(locate('div').withAttr({title: 'Create a new template'}))
-    I.fillField('Template Name', 'FWremove')
-    I.click('Save')
-    I.see('Template created.')
-    I.wait(3)
-    I.click('Hab Ger Firmware')
-    I.click('Manage Firmware')
-    I.click(locate('.firmware-enabled'));
-    I.click('Save')
+// // ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
+// Scenario('@San: 14° FIRMWARE UPDATE - DELETE', async(I) => {
+//     I.click(locate('a').withAttr({ href: '#/template/list' }));
+//     I.click(locate('div').withAttr({title: 'Create a new template'}))
+//     I.fillField('Template Name', 'FWremove')
+//     I.click('Save')
+//     I.see('Template created.')
+//     I.wait(3)
+//     I.click('Hab Ger Firmware')
+//     I.click('Manage Firmware')
+//     I.click(locate('.firmware-enabled'));
+//     I.click('Save')
 
-    I.click('FWremove')
-    I.click(locate('.footer button').withAttr ({title: "Remove"}))
-    I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
-    I.see('Template removed.')
-})
+//     I.click('FWremove')
+//     I.click(locate('.footer button').withAttr ({title: "Remove"}))
+//     I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+//     I.see('Template removed.')
+// })
 
-// ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
-Scenario('@San: 15° Creating: template Binario', async (I) => {
-    I.click(locate('a').withAttr({ href: '#/template/list' }));
-    I.click(locate('div').withAttr({title: 'Create a new template'}))
-    I.fillField('Template Name', 'BINARIO')
-    I.click('Save')
-    I.see('Template created.')
+// // ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
+// Scenario('@San: 15° Creating: template Binario', async (I) => {
+//     I.click(locate('a').withAttr({ href: '#/template/list' }));
+//     I.click(locate('div').withAttr({title: 'Create a new template'}))
+//     I.fillField('Template Name', 'BINARIO')
+//     I.click('Save')
+//     I.see('Template created.')
 
-    I.click('BINARIO')
-    I.click('Manage Firmware')
-    I.click('Manage Images')
-    I.click(locate('div').find('.body-form-nodata ').withAttr({role: 'button'}))
-    I.fillField(locate('.input-field').withAttr({name: 'vs1.0'}))
+//     I.click('BINARIO')
+//     I.click('Manage Firmware')
+//     I.click('Manage Images')
+//     I.click(locate('div').find('.body-form-nodata ').withAttr({role: 'button'}))
+//     I.fillField(locate('.input-field').withAttr({name: 'vs1.0'}))
 
-    //I.fillField('name', 'imagem1')
-    // I.fillField(locate('input-field').withAttr({name: 'imagem1'}))
+//     //I.fillField('name', 'imagem1')
+//     // I.fillField(locate('input-field').withAttr({name: 'imagem1'}))
     
-    // Anexa um arquivo ao elemento localizado por rótulo, nome, CSS ou XPath O caminho para o arquivo é o diretório de codecept atual relativo 
-    // (onde codecept.json ou codecept.conf.js está localizado). O arquivo será carregado no sistema remoto (se os testes estiverem sendo executados remotamente).
-    //I.attachFile(locate('p').find('input').withAttr({}))
-    //I.attachFile('file', '/arquivo.hex');
-    // I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
-    I.click('Save')
-    I.wait(5)
-})
+//     // Anexa um arquivo ao elemento localizado por rótulo, nome, CSS ou XPath O caminho para o arquivo é o diretório de codecept atual relativo 
+//     // (onde codecept.json ou codecept.conf.js está localizado). O arquivo será carregado no sistema remoto (se os testes estiverem sendo executados remotamente).
+//     //I.attachFile(locate('p').find('input').withAttr({}))
+//     //I.attachFile('file', '/arquivo.hex');
+//     // I.attachFile('form input[name=avatar]', 'data/avatar.jpg');
+//     I.click('Save')
+//     I.wait(5)
+// })
 
 // FLUXO
-Scenario('@basic: 17° Creating a simple flow', async (I, Flow, Device, Notification) => {
+Scenario('@basic: 16° Creating a simple flow', async (I, Flow, Device, Notification) => {
     Feature('Flow creation and execution');
 
     Flow.init(I);
@@ -332,38 +328,38 @@ Scenario('@basic: 17° Creating a simple flow', async (I, Flow, Device, Notifica
     await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 1);    
 });
 
-// OUTRO TENANT 
- Scenario('@San: 18° Other Tenant', async() => { 
-});
+// // OUTRO TENANT 
+//  Scenario('@San: 17° Other Tenant', async() => { 
+// });
 
 
-Scenario('@San: tenants', async (User, I) => {
-const Utils = require ('../../Utils')
-    newUser = () => ({
-        name: 'Random Morty',
-        username: `a${Utils.sid()}`,
-        service: `a${Utils.sid()}`,
-        email: `${Utils.sid()}@noemail.com`,
-        profile: 'admin',
-    });
+// Scenario('@San: 18° tenants', async (I) => {
+// const Utils = require ('../../Utils')
+//     I = () => ({
+//         name: 'Random Morty',
+//         username: `a${Utils.sid()}`,
+//         service: `a${Utils.sid()}`,
+//         email: `${Utils.sid()}@noemail.com`,
+//         profile: 'admin',
+//     });
 
-    function genericLogin(I, username, pass = 'temppwd') {
-        logout(I);
-        I.see('Sign in');
-        I.fillField('Username', username);
-        I.fillField('Password', pass);
-        I.click('Login');
-        I.wait(3);
-    }    
+//     function genericLogin(I, username, pass = 'temppwd') {
+//         logout(I);
+//         I.see('Sign in');
+//         I.fillField('Username', username);
+//         I.fillField('Password', pass);
+//         I.click('Login');
+//         I.wait(3);
+//     }    
 
-    const jUserA = newUser();
-    //const jUserB = newUser();
-    await I.createUser(jUserA);
+//     const jUserA = newUser();
+//     //const jUserB = newUser();
+//     await I.createUser(jUserA);
 
-    // Logout and Login user A
-    genericLogin(I, jUserA.username);
+//     // Logout and Login user A
+//     genericLogin(I, jUserA.username);
 
-})
+// })
 
 
 
