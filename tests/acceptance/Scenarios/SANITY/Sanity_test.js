@@ -1,5 +1,3 @@
-// import { DeviceDeveloperMode } from "material-ui/svg-icons";
-
 Feature('Sanity CRUD');
 
 Before((login) => {
@@ -120,29 +118,46 @@ Scenario('@San: Device Create', async(I, Device) => {
     Device.clickSave();
 })
 
+/*
+   .split <- está função usa para separar as strings até chegar ao ID do Device, 
+   ou qualquer outra string.
+   http://localhost:8000/#/device/id/45b768/detail 
+ */
 Scenario('@San: SEND DATA - MQTT', async(I, Device) => {
-    //Se existe o dispositivo criado
     Device.checkExistCard('GEO');
-    //console.log(I.getCurrentUrl())
-    I.click(locate('i').withAttr({ title: 'See details'}));
+    Device.clickDetailsDeviceDefault();
+    Device.clickDynamicAttributes('TEMPGEO');
 
-    // .slit <- está função estão separando as strings até chegar no ID do Device
     const fullUrl = await I.getCurrentUrl()
     const array1 = fullUrl.split("/device/id/");
-    const deviceId = array1[1].replace("/detail","");
-    
-    console.log(deviceId);
-   //http://localhost:8000/#/device/id/45b768/detail
+    const deviceId = array1[1].replace("/detail",""); 
 
-   // ENVIAR DADO MQTT 
-   I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}');
+    I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}');
+    I.wait(7)
 })
 
-//  ALTERAR DEVICE 
+//ZOOM + | ZOOM -
+Scenario('San: (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
+    Device.clickDetailsDeviceDefault();
+    Device.clickDynamicAttributes('TEMPGEO')
+
+    Device.clickZoomIn();
+    Device.clickZoomIn();
+    Device.clickZoomIn();
+
+    Device.clickZoomOut();
+    Device.clickZoomOut();
+    Device.clickZoomOut();
+
+    //Selecionar satelite
+    Device.clickMapSatelite();
+})
+
+//ALTERAR DEVICE - NAME 
 Scenario('@San: 8° UPDATE DEVICE', async(I) => {
     I.click(locate('a').withAttr({ href: '#/device' }));
     I.click('SanityGEO')
-    I.fillField('UpdateDevive')
+    I.fillField('UpdateDevice')
     I.click('Save')
 })
 
@@ -317,7 +332,38 @@ Scenario('@basic: 17° Creating a simple flow', async (I, Flow, Device, Notifica
     await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 1);    
 });
 
-// // OUTRO TENANT 
- Scenario('@San: 18° Other Tenant', async(I) => { 
+// OUTRO TENANT 
+ Scenario('@San: 18° Other Tenant', async() => { 
+});
+
+
+Scenario('@San: tenants', async (User, I) => {
+const Utils = require ('../../Utils')
+    newUser = () => ({
+        name: 'Random Morty',
+        username: `a${Utils.sid()}`,
+        service: `a${Utils.sid()}`,
+        email: `${Utils.sid()}@noemail.com`,
+        profile: 'admin',
+    });
+
+    function genericLogin(I, username, pass = 'temppwd') {
+        logout(I);
+        I.see('Sign in');
+        I.fillField('Username', username);
+        I.fillField('Password', pass);
+        I.click('Login');
+        I.wait(3);
+    }    
+
+    const jUserA = newUser();
+    //const jUserB = newUser();
+    await I.createUser(jUserA);
+
+    // Logout and Login user A
+    genericLogin(I, jUserA.username);
 
 })
+
+
+

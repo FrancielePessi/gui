@@ -159,19 +159,13 @@ module.exports = {
         I.seeElement(locate('.card-size').find('span').withAttr({ title: name }));
     },
 
-    getIdByCard(name) {
-        const localCard = locate('.card-size').find('span').withAttr({ title: name });
-
-        const localCard2 = localCard.withDescendant('.title-text');
-
-        console.log(localCard2);
-
-        console.log(locate(localCard2).find('a'));
-
-        
-
-        //subir um div e entrar em outra com .title-edit e pegar o href do a
-    },
+    // getIdByCard(name) {
+    //     const localCard = locate('.card-size').find('span').withAttr({ title: name });
+    //     const localCard2 = localCard.withDescendant('.title-text');
+    //     console.log(localCard2);
+    //     console.log(locate(localCard2).find('a'));
+    //     //subir um div e entrar em outra com .title-edit e pegar o href do a
+    // },
 
     checkNonExistCard(name) {
         I.dontSeeElement(locate('.card-size').find('span').withAttr({ title: name }));
@@ -187,8 +181,27 @@ module.exports = {
         I.click(locate('a').withAttr({ href: `#/device/id/${deviceId}/detail` }));
     },
 
-    clickDetailsDeviceGeo(name){
-        I.click(locate('div').withAttr({ title: name}))
+    clickDetailsDeviceDefault (){
+        I.click(locate('i').withAttr({ title: 'See details'}));
+    },
+
+    clickDynamicAttributes(name){
+        I.click(locate('.col-label-body').find('div').withAttr({title: name}))
+    },
+
+    clickZoomIn(){
+        I.click('Zoom in')
+        I.wait(1)
+    },
+
+    clickZoomOut() {
+        I.click('Zoom out') 
+        I.wait(1);
+    },
+
+    clickMapSatelite(){
+        I.checkOption(locate('leaflet-control-layers-selector div').find('.input').withAttr({nome: 'leaflet-base-layers_36'}));
+        I.wait(10)
     },
 
     selectAttr(attr) {
