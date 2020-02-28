@@ -20,8 +20,8 @@ const config = {
             url: env.dojot_host,
             keepCookies: true,
             fullPageScreenshots: true,
-            // Para rodar no FireFox, comentar a linha a baixo
-            browser: process.env.BROWSER || 'firefox',   
+            // Para rodar no FireFox, descomentar a linha a baixo
+            // browser: process.env.BROWSER || 'firefox',   
             restart: false,
             keepBrowserState: true,
             show: true,
