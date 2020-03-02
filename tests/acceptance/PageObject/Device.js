@@ -208,6 +208,11 @@ module.exports = {
     //     I.wait(10)
     // },
 
+    clickMap(){
+        //I.click(locate('div').find('.input').withAttr({value: 'checked'}))
+        I.click('toggle-map')
+    },
+
     selectAttr(attr) {
         I.click(locate('div').withAttr({ title: attr }));
     },
