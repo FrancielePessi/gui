@@ -45,72 +45,53 @@ function checkingUpdateUser(I, data) {
     I.seeSelectOptionByNameAndValue('profile', data.profile);
 }
 
-//CENARIO TENANT
-function checkingTenant(I, tenant) {
-    I.click(locate('div').withAttr({ title: 'Login details' }));
-    I.seeElement(locate('.logout-page-info').withText(tenant));
-    I.click(locate('div').withAttr({ title: 'Login details' }));
-}
-
-// CENARIO TENANT
-function genericLogin(I, username, pass = 'temppwd') {
-    logout(I);
-    I.see('Sign in');
-    I.fillField('Username', username);
-    I.fillField('Password', pass);
-    I.click('Login');
-    I.wait(3);
-}  
-
-//CENARIO TENANT
-newUser = () => ({
-    name: 'Navarro',
-    username: `navarro`,
-    service: `teste`,
-    email: `navsanity@noemail.com`,
-    profile: 'admin',
-
-});
-
 //ADICIONAR UM NOVO USUARIO
 Scenario('@San: 1° ADD A NEW USER', async(I, User, Commons) => {    
+    //I.login('admin');
     User.openUserPage();
     User.clickCreateNew();
     User.fillAndSaveSanity(user_data);
+
+    //DETALHES DO USUARIO
     Commons.clickCardByName('franciele');
     checkingUser(I, user_data);
+})
+
+    Scenario('@San: 2° REGISTER USER PASSWORD', async(I, User) => { 
+    User.init(I);
     User.logoutUser();
     User.loginNewUser('franpessi', 'temppwd')
     User.updatePasswordSanity('temppwd', 'temppwd1', 'temppwd1')
     I.see('Password updated')
+    //I.wait(3)
 })
 
 //ALTERAR CADASTRO DO USUARIO
-Scenario('@San: 2° CHANGE USER REGISTRATION', async (User, Commons, I) => {       
+Scenario('@San: 3° CHANGE USER REGISTRATION', async (User, Commons, I) => {       
+    User.init(I);
     User.openUserPage();
     User.clickUserCreated('franciele')
     User.updateUserNameAndEmailSanity(update_user)
     Commons.clickCardByName('FranNavarro');
     checkingUpdateUser(I, checkingUpdate_user);
-    
 })      
 
 // REMOVER USUÁRIO
-Scenario('@San: 3° Delete User', async (User, I) =>{
+Scenario('@San: 4° Delete User', async (User, I) =>{
+    User.init(I);
     User.logoutUser();
-    User.loginNewUser('admin', 'admin')
+    User.loginUserDefault()
     User.openUserPage();
     User.clickUserCreated('FranNavarro')
     User.clickRemove();
     User.confirmRemove();
-   // I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
     I.see('User removed.')
     I.wait(3)
 })
 
 // ADICIONAR TEMPLATE COM GEO
-Scenario('@San: 4° Creating a template GEO', async (I, Template) => {
-
+Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
+    Template.init(I);
     Template.init(I);
     Template.clickOpenTemplatePage();
     Template.clickCreateNew();
@@ -125,7 +106,7 @@ Scenario('@San: 4° Creating a template GEO', async (I, Template) => {
     Template.seeTemplateHasCreated();
 });
 
-Scenario('@San: 5° Device Create', async(I, Device) => {
+Scenario('@San: 6° Device Create', async(I, Device) => {
     Device.init(I);    
     Device.clickOpenDevicePage();
     Device.clickCreateNew();
@@ -137,12 +118,14 @@ Scenario('@San: 5° Device Create', async(I, Device) => {
     Device.checkExistCard('GEO')
 })
 
-/*
-   .split <- está função usa para separar as strings até chegar ao ID do Device, 
-   ou qualquer outra string.
-   http://localhost:8000/#/device/id/45b768/detail 
- */
-Scenario('@San: 6° SEND DATA - MQTT', async(I, Device) => {
+// /*
+//    .split <- está função usa para separar as strings até chegar ao ID do Device, 
+//    ou qualquer outra string.
+//    http://localhost:8000/#/device/id/45b768/detail 
+//  */
+
+Scenario('@San: 7° SEND DATA - MQTT', async(I, Device) => {
+    Device.init(I);
     Device.checkExistCard('GEO');
     Device.clickDetailsDeviceDefault();
     Device.clickDynamicAttributes('TEMPGEO');
@@ -153,10 +136,12 @@ Scenario('@San: 6° SEND DATA - MQTT', async(I, Device) => {
 
     I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}');
     I.wait(7)
+  
 })
 
 //ZOOM + | ZOOM -
-Scenario('San: 7° (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
+Scenario('San: 8° (ZOOM + | ZOOM -) and (SATELITE)', async(I, Device) => {
+    Device.init(I);
     Device.clickDetailsDeviceDefault();
     Device.clickDynamicAttributes('TEMPGEO')
 
@@ -172,6 +157,7 @@ Scenario('San: 7° (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
    // Device.clickMapSatelite();
 })
 
+// //MAP BIG
 // Scenario('San: MAPS', async (I, Device) => {
 //     Device.clickOpenDevicePage();
 //     Device.clickMap();
@@ -179,25 +165,96 @@ Scenario('San: 7° (ZOOM + | ZOOM -) and (SATELITE)', async(Device) => {
 // })
 
 //ALTERAR DEVICE - NAME 
-Scenario('@San: 8° UPDATE DEVICE', async(I, Device) => {
+Scenario('@San: 9° UPDATE DEVICE', async(I, Device) => {
+    Device.init(I);
     Device.clickOpenDevicePage();
     Device.clickDeviceCreated('GEO')
     Device.fillNameDevice('UpdateDeviceGEO')
     Device.clickSave(); 
     I.see('Device updated.')
-        I.wait(3)
+    I.wait(3)
+    Device.checkExistCard('UpdateDeviceGEO')
          
 })
 
-//APLICAR FILTRO NA CONSULTA DE DEVICES CADASTRADOS
-Scenario('@San: 9° APPLY FILTER IN THE CONSULTATION OF REGISTERED DEVICES', async(I) => {
-    I.click(locate('a').withAttr({ href: '#/device' }));
-    // I.click(locate('i').withAttr({ href: 'fa fa-search' }));
-    I.click('.fa fa-search')
+Scenario('@San: 10° Create template', async(I, Template) => {
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemOneSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemTwoSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemThereeSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemForSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemFiveSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+    //I.wait(7)
 })
 
-// ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
-Scenario('@San: 10° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
+Scenario('@San: 11° Filter Template', async(I, Template) => {
+    Template.init(I)
+    Template.clickOpenTemplatePage();
+    Template.clickFilterTemplate();
+    Template.labelName('TemTwoSanity')
+    Template.clickSearchTemplate();
+    Template.seeCardByTemplateName('TemTwoSanity');
+    I.wait(5)
+})
+
+Scenario('@San: 12° Create Device', async(I, Device, Template) => {
+    //create template for device
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('Sanity');
+    I.click('Save')
+
+    //create device for filter
+    Device.clickOpenDevicePage();
+    Device.clickCreateNew();
+    Device.fillNameDevice('filtro')
+    Device.clickAddOrRemoveTemplate();
+    Device.clickToSelectTemplate('Sanity');
+    Device.clickBack();
+    Device.clickSave();
+
+    Device.clickOpenDevicePage();
+    Device.clickCreateNew();
+    Device.fillNameDevice('filtro2')
+    Device.clickAddOrRemoveTemplate();
+    Device.clickToSelectTemplate('Sanity');
+    Device.clickBack();
+    Device.clickSave();
+})
+
+Scenario('@San: 13° Filter Device', async(I, Device) => {
+    Device.init(I)
+    Device.clickOpenDevicePage();
+    Device.clickFilterDevice()
+    Device.labelName('filtro2')
+    Device.seeCardByDeviceName('filtro2')
+    Device.clickSearchDevice();
+    I.wait(5)
+})
+
+//ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
+Scenario('@San: 14° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
@@ -211,7 +268,7 @@ Scenario('@San: 10° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I) => {
 })
  
 // ATUALIZANDO NOMES DOS PARAMETROS     
-Scenario('@San: 11° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
+Scenario('@San: 15° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) => {
     I.click('Hab Ger Firmware')
     I.click('Manage Firmware')
     I.fillField('current_state', 'estado_atual')
@@ -224,7 +281,7 @@ Scenario('@San: 11° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(I) 
 })
 
 // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
-Scenario('@San: 12° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
+Scenario('@San: 16° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'Hab Ger Firmware')
@@ -238,7 +295,7 @@ Scenario('@San: 12° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(I) => {
 })
 
 // REMOVER TEMPLATE
-Scenario('@San: 13° DELETE TEMPLATE', async(I) => {
+Scenario('@San: 17° DELETE TEMPLATE', async(I) => {
     I.click('Hab Ger Firmware')
     I.click(locate('.footer button').withAttr ({title: "Remove"}))
     I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
@@ -246,7 +303,7 @@ Scenario('@San: 13° DELETE TEMPLATE', async(I) => {
 })
 
 // ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
-Scenario('@San: 14° FIRMWARE UPDATE - DELETE', async(I) => {
+Scenario('@San: 18° FIRMWARE UPDATE - DELETE', async(I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'FWremove')
@@ -265,7 +322,7 @@ Scenario('@San: 14° FIRMWARE UPDATE - DELETE', async(I) => {
 })
 
 // ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
-Scenario('@San: 15° Creating: template Binario', async (I) => {
+Scenario('@San: 19° Creating: template Binario', async (I) => {
     I.click(locate('a').withAttr({ href: '#/template/list' }));
     I.click(locate('div').withAttr({title: 'Create a new template'}))
     I.fillField('Template Name', 'BINARIO')
@@ -290,8 +347,8 @@ Scenario('@San: 15° Creating: template Binario', async (I) => {
     I.wait(5)
 })
 
-// FLUXO
-Scenario('@basic: 16° Creating a simple flow', async (I, Flow, Device, Notification) => {
+//FLUXO
+Scenario('@basic: 20° Creating a simple flow', async (I, Flow, Device, Notification) => {
     Feature('Flow creation and execution');
 
     Flow.init(I);
@@ -356,22 +413,22 @@ Scenario('@basic: 16° Creating a simple flow', async (I, Flow, Device, Notifica
     I.wait(5);
 
     //await Notification.shouldISeeMessagesWithText('output value', totalBefore + 1); 
-    await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 1); 
+    await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 0); 
 });
 
-//OUTRO TENANT
-Scenario('@San: 17° tenants', async (I) => {
-    I.loginAdmin(I);
-
-    const nav = newUser();
-    const navB = newUser();
-    await I.createUser(nav);
-
-    // Logout and Login user A
-    genericLogin(I, nav.username);
+Scenario('@San: 21° Update Flow', async(I, Flow) => {
+    Flow.clickOpen();
+    Flow.clickFlow('Sanity Test');
+    Flow.addGEOfence();
+    Flow.clickSave();
+    Flow.seeFlowHasUpdated();
+    I.wait(5)
 })
 
-
+Scenario('@San: 22° Remove flow', async(I, Flow) => {
+    Flow.clickOpen();
+    Flow.clickRemoveFlow('Sanity Test')
+})
 
 //#########//
 //TENANT  //
@@ -407,22 +464,65 @@ function genericLogin(I, username, pass = 'temppwd') {
     I.wait(3);
 }
 
-Scenario('@San: Create Tenant diferrent', async (I, User, Commons) => {
-    // At first, do login
-    I.loginAdmin(I, false);
+Scenario('@San: 23° Create Tenant diferrent', async (I, User, Commons) => {
+    //I.loginAdmin(I, false);
 
     // Criar usuario com a API, com tenant diferente
-    // 1. create User
+    // 1. Creando usuario
     const jUserA = newUser();
     await I.createUser(jUserA);
 
     // Logar com usuario 
     genericLogin(I, jUserA.username);
+
     //Checando se tenant foi incluido pela API
     checkingTenant(I, jUserA.service);
     I.wait(5)
 
-    //  // back to admin
+})
+
+Scenario('@San: 24° Create template', async(I, Template) => {
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemOneSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemTwoSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemThereeSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemForSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemFiveSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+    //I.wait(7)
+})
+
+Scenario('@San: 25° Filter Template', async(I, Template) => {
+    Template.clickOpenTemplatePage();
+    Template.clickFilterTemplate();
+    Template.labelName('TemTwoSanity')
+    Template.clickSearchTemplate();
+    Template.seeCardByTemplateName('TemTwoSanity');
+    I.wait(5)
+})
+
+
+
+//  // back to admin
     //  genericLogin(I, 'admin', 'admin');
     //  User.openUserPage();
 
@@ -433,6 +533,6 @@ Scenario('@San: Create Tenant diferrent', async (I, User, Commons) => {
     //  User.seeHasRemoved();
     //  I.wait(3);
 
-});
+
 
 

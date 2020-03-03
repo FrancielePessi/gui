@@ -67,6 +67,14 @@ module.exports = {
         I.click('Login')
     },
 
+    loginUserDefault(){
+        I.fillField('username', 'admin')
+        I.fillField('password', 'admin')
+        I.click('Login')
+    },
+
+
+
     updatePasswordSanity(oldPassword, newPassword, confirmPassword){
         I.click(locate('div').withAttr({ title: 'Login details' }))
         I.click('.logout-page-changePassword')
@@ -87,7 +95,6 @@ module.exports = {
     clickDiscard() {
         I.click(locate('button').withAttr({ title: 'Discard' }));
     },
-
 
     confirmRemove() {
         I.click(locate('button').inside('.confirm-modal').withAttr({ title: 'Remove' }));

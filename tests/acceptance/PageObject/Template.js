@@ -78,9 +78,28 @@ module.exports = {
         I.click(locate('div').withAttr({ title: 'Create a new template' }));
     },
 
+    // Template filtro
     clickCardByNameTemplate(nameTemplate) {
         I.waitForElement(locate('div').withAttr({ title: nameTemplate }));
         I.click(locate('div').withAttr({ title: nameTemplate }));
+    },
+
+    clickFilterTemplate(){
+        I.click(locate('div').find('.searchBtn').withAttr({title: 'Show search bar'}))
+    },
+
+    labelName(nameTemplate){
+       I.fillField('#fld_name', nameTemplate)
+    },
+
+    clickSearchTemplate(){
+        I.click(locate('button').withAttr({type: 'button'}))
+    },
+    // Template filtro
+
+
+    seeCardByTemplateName(name) {
+        I.seeElement(locate('div').find('span').withText(name));
     },
 
     _fillAttrForm(fieldValue, attrType, attrValueType, value) {

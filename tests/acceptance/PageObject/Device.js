@@ -55,6 +55,25 @@ module.exports = {
         I.click(name)
     },
 
+    // PARA FILTRO DE DEVICES
+    clickFilterDevice(){
+        I.click(locate('div').find('.searchBtn').withAttr({title: 'Show search bar'}))
+    },
+
+    labelName(nameDevice){
+        I.fillField('#fld_device_name', nameDevice)
+     },
+
+     seeCardByDeviceName(name) {
+        I.seeElement(locate('div').find('span').withText(name));
+    },
+
+    clickSearchDevice(){
+        I.click(locate('button').withAttr({type: 'button'}))
+    },
+    //PARA FILTROS DE DEVICE
+
+
     seeAllConfigurations(arrayConfigurations) {
         arrayConfigurations.forEach((config) => {
             I.seeElement(locate('input').withAttr({ value: Util.toString(config.static_value) }).before(locate('label').withText(Util.uppercaseFirstLetter(config.label))));
@@ -203,10 +222,10 @@ module.exports = {
         I.wait(1);
     },
 
-    // clickMapSatelite(){
-    //     I.checkOption(locate('leaflet-control-layers-selector div').find('.input').withAttr({nome: 'leaflet-base-layers_36'}));
-    //     I.wait(10)
-    // },
+    clickMapSatelite(){
+        I.checkOption(locate('toggle-map').find('div').withText('style').find('input'))
+        I.wait(10)
+    },
 
     clickMap(){
         //I.click(locate('div').find('.input').withAttr({value: 'checked'}))

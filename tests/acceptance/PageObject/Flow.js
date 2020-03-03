@@ -74,6 +74,13 @@ module.exports = {
         I.dragSlider('#palette_node_notification', 700);
     },
 
+    addGEOfence(){
+        //I.click('#palette-collapse-all');
+       // I.click('#palette-header-output');
+        I.dragSlider('#palette_node_event_template_in', 800);
+        
+    },
+
 
     async connectFlows() {
         ids = await I.grabAttributeFrom('.nodegroup', 'id');
@@ -163,6 +170,28 @@ module.exports = {
     seeFlowHasCreated() {
         I.wait(1);
         I.see('Flow created.');
+    },
+
+    seeFlowHasUpdated() {
+        I.wait(1);
+        I.see('Flow updated.');
+    },
+
+    //REMOVER FLOW
+    clickRemoveFlow(nameFlow){  
+        I.click(locate('span').withAttr({title: nameFlow})) 
+        I.click(locate('div').withAttr({ title: 'Remove Flow' }));
+        I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
+        I.wait(3)
+    },
+
+    clickSave(){
+        I.click(locate('div').withAttr({title: 'Save Flow'}))
+    },
+
+    clickFlow(nameFlow){
+        I.click(locate('span').withAttr({title: nameFlow})) 
+        I.wait(3)
     },
 
     async sendMQTTMessages(deviceId) {
