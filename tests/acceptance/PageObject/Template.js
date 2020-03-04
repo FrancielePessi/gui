@@ -78,6 +78,33 @@ module.exports = {
         I.click(locate('div').withAttr({ title: 'Create a new template' }));
     },
 
+    // MANAGER FIRMWARE
+    clickTemplateCreated(nameTemplate){
+        I.click(nameTemplate)
+    },
+
+    clickManagerFirmware(){
+        I.click('Manage Firmware')
+    },
+
+    clickEnableFirware(){
+        I.click(locate('.firmware-enabled'));
+    },
+
+    clickEnabledFirmaware(){
+        I.click(locate('.firmware-enabled'));
+    },
+
+    // ATUALIZANDO NOMES DOS PARAMETROS   
+    RenameFirmawareAttributes(current_state, update_result, upload_image, apply_image, current_version){
+    I.fillField('current_state', current_state,)
+    I.fillField('update_result', update_result)
+    I.fillField ('upload_image', upload_image)
+    I.fillField('apply_image', apply_image)
+    I.fillField('current_version', current_version)
+    },
+    // MANAGER FIRMWARE
+
     // Template filtro
     clickCardByNameTemplate(nameTemplate) {
         I.waitForElement(locate('div').withAttr({ title: nameTemplate }));
@@ -307,6 +334,11 @@ module.exports = {
     seeTemplateHasDelete() {
         I.wait(3);
         I.see('Template removed.');
+    },
+
+    seeTemplateFWHasUpdated() {
+        I.wait(3);
+        I.see('Template successfully updated.');
     },
 
     seeTemplateHasUpdated() {

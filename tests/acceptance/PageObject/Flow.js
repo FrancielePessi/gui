@@ -177,16 +177,16 @@ module.exports = {
         I.see('Flow updated.');
     },
 
+    clickSave(){
+        I.click(locate('div').withAttr({title: 'Save Flow'}))
+    },
+
     //REMOVER FLOW
     clickRemoveFlow(nameFlow){  
         I.click(locate('span').withAttr({title: nameFlow})) 
         I.click(locate('div').withAttr({ title: 'Remove Flow' }));
         I.click(locate('.confirm-modal button').withAttr({ title: "Remove" }))
         I.wait(3)
-    },
-
-    clickSave(){
-        I.click(locate('div').withAttr({title: 'Save Flow'}))
     },
 
     clickFlow(nameFlow){
