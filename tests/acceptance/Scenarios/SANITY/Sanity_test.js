@@ -45,117 +45,117 @@ function checkingUpdateUser(I, data) {
     I.seeSelectOptionByNameAndValue('profile', data.profile);
 }
 
-// //ADICIONAR UM NOVO USUARIO
-// Scenario('@San: 1° ADD A NEW USER', async(I, User, Commons) => {    
-//     User.init(I)
-//     User.openUserPage();
-//     User.clickCreateNew();
-//     User.fillAndSaveSanity(user_data);
+//ADICIONAR UM NOVO USUARIO
+Scenario('@San: 1° ADD A NEW USER', async(I, User, Commons) => {    
+    User.init(I)
+    User.openUserPage();
+    User.clickCreateNew();
+    User.fillAndSaveSanity(user_data);
 
-//     //DETALHES DO USUARIO
-//     Commons.clickCardByName('franciele');
-//     checkingUser(I, user_data);
-// })
+    //DETALHES DO USUARIO
+    Commons.clickCardByName('franciele');
+    checkingUser(I, user_data);
+})
 
-// Scenario('@San: 2° REGISTER USER PASSWORD', async(I, User) => { 
-//     User.init(I);
-//     User.logoutUser();
-//     User.loginNewUser('franpessi', 'temppwd')
-//     User.updatePasswordSanity('temppwd', 'temppwd1', 'temppwd1')
-//     I.see('Password updated')
-//     //I.wait(3)
-// })
+Scenario('@San: 2° REGISTER USER PASSWORD', async(I, User) => { 
+    User.init(I);
+    User.logoutUser();
+    User.loginNewUser('franpessi', 'temppwd')
+    User.updatePasswordSanity('temppwd', 'temppwd1', 'temppwd1')
+    I.see('Password updated')
+    //I.wait(3)
+})
 
-// //ALTERAR CADASTRO DO USUARIO
-// Scenario('@San: 3° CHANGE USER REGISTRATION', async (User, Commons, I) => {       
-//     User.init(I);
-//     User.openUserPage();
-//     User.clickUserCreated('franciele')
-//     User.updateUserNameAndEmailSanity(update_user)
-//     Commons.clickCardByName('FranNavarro');
-//     checkingUpdateUser(I, checkingUpdate_user);
-// })      
+//ALTERAR CADASTRO DO USUARIO
+Scenario('@San: 3° CHANGE USER REGISTRATION', async (User, Commons, I) => {       
+    User.init(I);
+    User.openUserPage();
+    User.clickUserCreated('franciele')
+    User.updateUserNameAndEmailSanity(update_user)
+    Commons.clickCardByName('FranNavarro');
+    checkingUpdateUser(I, checkingUpdate_user);
+})      
 
-// // REMOVER USUÁRIO
-// Scenario('@San: 4° Delete User', async (User, I) =>{
-//     //User.init(I);
-//     User.logoutUser();
-//     User.loginUserDefault()
-//     User.openUserPage();
-//     User.clickUserCreated('FranNavarro')
-//     User.clickRemove();
-//     User.confirmRemove();
-//     I.see('User removed.')
-//     I.wait(3)
-// })
+// REMOVER USUÁRIO
+Scenario('@San: 4° Delete User', async (User, I) =>{
+    //User.init(I);
+    User.logoutUser();
+    User.loginUserDefault()
+    User.openUserPage();
+    User.clickUserCreated('FranNavarro')
+    User.clickRemove();
+    User.confirmRemove();
+    I.see('User removed.')
+    I.wait(3)
+})
 
-// // ADICIONAR TEMPLATE COM GEO
-// Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
-//     Template.init(I);
-//     Template.init(I);
-//     Template.clickOpenTemplatePage();
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('SanityGEO');
+// ADICIONAR TEMPLATE COM GEO
+Scenario('@San: 5° Creating a template GEO', async (I, Template) => {
+    Template.init(I);
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('SanityGEO');
 
-//     Template.addAttr(
-//         'TEMPGEO',
-//         Template.AttributeType.dynamic,
-//         Template.AttributeValueType.geo
-//     );
-//     Template.clickSave();
-//     Template.seeTemplateHasCreated();
-// });
+    Template.addAttr(
+        'TEMPGEO',
+        Template.AttributeType.dynamic,
+        Template.AttributeValueType.geo
+    );
+    Template.clickSave();
+    Template.seeTemplateHasCreated();
+});
 
-// Scenario('@San: 6° Device Create', async(I, Device) => {
-//     Device.init(I);    
-//     Device.clickOpenDevicePage();
-//     Device.clickCreateNew();
-//     Device.fillNameDevice('GEO')
-//     Device.clickAddOrRemoveTemplate();
-//     Device.clickToSelectTemplate('SanityGEO');
-//     Device.clickBack();
-//     Device.clickSave();
-//     Device.checkExistCard('GEO')
-// })
+Scenario('@San: 6° Device Create', async(I, Device) => {
+    Device.init(I);    
+    Device.clickOpenDevicePage();
+    Device.clickCreateNew();
+    Device.fillNameDevice('GEO')
+    Device.clickAddOrRemoveTemplate();
+    Device.clickToSelectTemplate('SanityGEO');
+    Device.clickBack();
+    Device.clickSave();
+    Device.checkExistCard('GEO')
+})
 
-// // /*
-// //    .split <- está função usa para separar as strings até chegar ao ID do Device, 
-// //    ou qualquer outra string.
-// //    http://localhost:8000/#/device/id/45b768/detail 
-// //  */
+// /*
+//    .split <- está função usa para separar as strings até chegar ao ID do Device, 
+//    ou qualquer outra string.
+//    http://localhost:8000/#/device/id/45b768/detail 
+//  */
 
-// Scenario('@San: 7° SEND DATA - MQTT', async(I, Device) => {
-//     Device.init(I);
-//     Device.checkExistCard('GEO');
-//     Device.clickDetailsDeviceDefault();
-//     Device.clickDynamicAttributes('TEMPGEO');
+Scenario('@San: 7° SEND DATA - MQTT', async(I, Device) => {
+    Device.init(I);
+    Device.checkExistCard('GEO');
+    Device.clickDetailsDeviceDefault();
+    Device.clickDynamicAttributes('TEMPGEO');
 
-//     const fullUrl = await I.getCurrentUrl()
-//     const array1 = fullUrl.split("/device/id/");
-//     const deviceId = array1[1].replace("/detail",""); 
+    const fullUrl = await I.getCurrentUrl()
+    const array1 = fullUrl.split("/device/id/");
+    const deviceId = array1[1].replace("/detail",""); 
 
-//     I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}');
-//     I.wait(7)
+    I.sendMQTTMessage(deviceId, '{"TEMPGEO": "-22.890970, -47.063006"}');
+    I.wait(7)
   
-// })
+})
 
-// //ZOOM + | ZOOM -
-// Scenario('San: 8° (ZOOM + | ZOOM -) and (SATELITE)', async(I, Device) => {
-//     Device.init(I);
-//     Device.clickDetailsDeviceDefault();
-//     Device.clickDynamicAttributes('TEMPGEO')
+//ZOOM + | ZOOM -
+Scenario('San: 8° (ZOOM + | ZOOM -) and (SATELITE)', async(I, Device) => {
+    Device.init(I);
+    Device.clickDetailsDeviceDefault();
+    Device.clickDynamicAttributes('TEMPGEO')
 
-//     Device.clickZoomIn();
-//     Device.clickZoomIn();
-//     Device.clickZoomIn();
+    Device.clickZoomIn();
+    Device.clickZoomIn();
+    Device.clickZoomIn();
 
-//     Device.clickZoomOut();
-//     Device.clickZoomOut();
-//     Device.clickZoomOut();
+    Device.clickZoomOut();
+    Device.clickZoomOut();
+    Device.clickZoomOut();
 
-//     //Selecionar satelite
-//    // Device.clickMapSatelite();
-// })
+    //Selecionar satelite
+   // Device.clickMapSatelite();
+})
 
 // // //MAP BIG
 // // Scenario('San: MAPS', async (I, Device) => {
@@ -164,174 +164,174 @@ function checkingUpdateUser(I, data) {
 // //     I.wait(10)
 // // })
 
-// //ALTERAR DEVICE - NAME 
-// Scenario('@San: 9° UPDATE DEVICE', async(I, Device) => {
-//     Device.init(I);
-//     Device.clickOpenDevicePage();
-//     Device.clickDeviceCreated('GEO')
-//     Device.fillNameDevice('UpdateDeviceGEO')
-//     Device.clickSave(); 
-//     I.see('Device updated.')
-//     I.wait(3)
-//     Device.checkExistCard('UpdateDeviceGEO')
+//ALTERAR DEVICE - NAME 
+Scenario('@San: 9° UPDATE DEVICE', async(I, Device) => {
+    Device.init(I);
+    Device.clickOpenDevicePage();
+    Device.clickDeviceCreated('GEO')
+    Device.fillNameDevice('UpdateDeviceGEO')
+    Device.clickSave(); 
+    I.see('Device updated.')
+    I.wait(3)
+    Device.checkExistCard('UpdateDeviceGEO')
          
-// })
+})
 
-// Scenario('@San: 10° Create template', async(I, Template) => {
-//     Template.init(I);
-//     Template.clickOpenTemplatePage();
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('TemOneSanity');
-//     I.click('Save')
-//     Template.seeTemplateHasCreated();
+Scenario('@San: 10° Create template', async(I, Template) => {
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemOneSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
 
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('TemTwoSanity');
-//     I.click('Save')
-//     Template.seeTemplateHasCreated();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemTwoSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
 
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('TemThereeSanity');
-//     I.click('Save')
-//     Template.seeTemplateHasCreated();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemThereeSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
 
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('TemForSanity');
-//     I.click('Save')
-//     Template.seeTemplateHasCreated();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemForSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
 
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('TemFiveSanity');
-//     I.click('Save')
-//     Template.seeTemplateHasCreated();
-//     //I.wait(7)
-// })
+    Template.clickCreateNew();
+    Template.fillNameTemplate('TemFiveSanity');
+    I.click('Save')
+    Template.seeTemplateHasCreated();
+    //I.wait(7)
+})
 
-// Scenario('@San: 11° Filter Template', async(I, Template) => {
-//     Template.init(I)
-//     Template.clickOpenTemplatePage();
-//     Template.clickFilterTemplate();
-//     Template.labelName('TemTwoSanity')
-//     Template.clickSearchTemplate();
-//     Template.seeCardByTemplateName('TemTwoSanity');
-//     I.wait(5)
-// })
+Scenario('@San: 11° Filter Template', async(I, Template) => {
+    Template.init(I)
+    Template.clickOpenTemplatePage();
+    Template.clickFilterTemplate();
+    Template.labelName('TemTwoSanity')
+    Template.clickSearchTemplate();
+    Template.seeCardByTemplateName('TemTwoSanity');
+    I.wait(5)
+})
 
-// Scenario('@San: 12° Create Device', async(I, Device, Template) => {
-//     //create template for device
-//     Template.init(I);
-//     Template.clickOpenTemplatePage();
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('Sanity');
-//     I.click('Save')
+Scenario('@San: 12° Create Device', async(I, Device, Template) => {
+    //create template for device
+    Template.init(I);
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('Sanity');
+    I.click('Save')
 
-//     //create device for filter
-//     Device.clickOpenDevicePage();
-//     Device.clickCreateNew();
-//     Device.fillNameDevice('filtro')
-//     Device.clickAddOrRemoveTemplate();
-//     Device.clickToSelectTemplate('Sanity');
-//     Device.clickBack();
-//     Device.clickSave();
+    //create device for filter
+    Device.clickOpenDevicePage();
+    Device.clickCreateNew();
+    Device.fillNameDevice('filtro')
+    Device.clickAddOrRemoveTemplate();
+    Device.clickToSelectTemplate('Sanity');
+    Device.clickBack();
+    Device.clickSave();
 
-//     Device.clickOpenDevicePage();
-//     Device.clickCreateNew();
-//     Device.fillNameDevice('filtro2')
-//     Device.clickAddOrRemoveTemplate();
-//     Device.clickToSelectTemplate('Sanity');
-//     Device.clickBack();
-//     Device.clickSave();
-// })
+    Device.clickOpenDevicePage();
+    Device.clickCreateNew();
+    Device.fillNameDevice('filtro2')
+    Device.clickAddOrRemoveTemplate();
+    Device.clickToSelectTemplate('Sanity');
+    Device.clickBack();
+    Device.clickSave();
+})
 
-// Scenario('@San: 13° Filter Device', async(I, Device) => {
-//     Device.init(I)
-//     Device.clickOpenDevicePage();
-//     Device.clickFilterDevice()
-//     Device.labelName('filtro2')
-//     Device.seeCardByDeviceName('filtro2')
-//     Device.clickSearchDevice();
-//     I.wait(5)
-// })
+Scenario('@San: 13° Filter Device', async(I, Device) => {
+    Device.init(I)
+    Device.clickOpenDevicePage();
+    Device.clickFilterDevice()
+    Device.labelName('filtro2')
+    Device.seeCardByDeviceName('filtro2')
+    Device.clickSearchDevice();
+    I.wait(5)
+})
 
-// //ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
-// Scenario('@San: 14° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I, Template) => {
-//     Template.clickOpenTemplatePage();
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('Hab Ger Firmware')
-//     Template.clickSave();
-//     Template.seeTemplateHasCreated();
+//ATUALIZADOR DE FIRMWARE - HABILITAR GERENCIADOR DE FIRMWARE
+Scenario('@San: 14° FIRMWARE UPDATE - ENABLE FIRMWARE MANAGER', async(I, Template) => {
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('Hab Ger Firmware')
+    Template.clickSave();
+    Template.seeTemplateHasCreated();
   
-//     Template.clickTemplateCreated('Hab Ger Firmware')
-//     Template.clickManagerFirmware();
-//     Template.clickEnableFirware();
-//     Template.clickSave();
-//     Template.seeTemplateFWHasUpdated();
-//     Template.clickSave();
-//     Template.seeTemplateHasUpdated();
+    Template.clickTemplateCreated('Hab Ger Firmware')
+    Template.clickManagerFirmware();
+    Template.clickEnableFirware();
+    Template.clickSave();
+    Template.seeTemplateFWHasUpdated();
+    Template.clickSave();
+    Template.seeTemplateHasUpdated();
 
-//     //Template.checkExistCard('Hab Ger Firmware')
-// })
+    //Template.checkExistCard('Hab Ger Firmware')
+})
  
-// // ATUALIZANDO NOMES DOS PARAMETROS     
-// Scenario('@San: 15° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(Template) => {
-//     Template.clickOpenTemplatePage();
-//     Template.clickTemplateCreated('Hab Ger Firmware')
-//     Template.clickManagerFirmware();
-//     Template.RenameFirmawareAttributes ('estado_atual', 
-//                 'atualizar_resultado', 
-//                  'carregar_imagem',
-//                  'aplicar_imagem',
-//                  'Versao_atual');
-//     Template.clickSave();
-//     Template.seeTemplateFWHasUpdated();
-//     Template.clickSave();
-//     Template.seeTemplateHasUpdated();
-// })
+// ATUALIZANDO NOMES DOS PARAMETROS     
+Scenario('@San: 15° FIRMWARE UPDATE - CONFIGURE SPECIFIC PARAMETERS', async(Template) => {
+    Template.clickOpenTemplatePage();
+    Template.clickTemplateCreated('Hab Ger Firmware')
+    Template.clickManagerFirmware();
+    Template.RenameFirmawareAttributes ('estado_atual', 
+                'atualizar_resultado', 
+                 'carregar_imagem',
+                 'aplicar_imagem',
+                 'Versao_atual');
+    Template.clickSave();
+    Template.seeTemplateFWHasUpdated();
+    Template.clickSave();
+    Template.seeTemplateHasUpdated();
+})
 
-// // ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
-// Scenario('@San: 16° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(Template) => {
-//     Template.clickOpenTemplatePage();
-//     Template.clickTemplateCreated('Hab Ger Firmware')
-//     Template.clickManagerFirmware();
-//     Template.clickEnabledFirmaware();
-//     Template.clickSave();
-//     Template.seeTemplateFWHasUpdated();
-//     Template.clickSave();
-//     Template.seeTemplateHasUpdated();
-// })
+// ATUALIZADOR DE FIRMWARE - DESABILITAR GERENCIAMENTO DE FIRMWARE
+Scenario('@San: 16° FIRMWARE UPDATE - DISABLE FIRMWARE MANAGER', async(Template) => {
+    Template.clickOpenTemplatePage();
+    Template.clickTemplateCreated('Hab Ger Firmware')
+    Template.clickManagerFirmware();
+    Template.clickEnabledFirmaware();
+    Template.clickSave();
+    Template.seeTemplateFWHasUpdated();
+    Template.clickSave();
+    Template.seeTemplateHasUpdated();
+})
 
-// // REMOVER TEMPLATE
-// Scenario('@San: 17° DELETE TEMPLATE', async(I, Template) => {
-//     Template.clickOpenTemplatePage();
-//     Template.clickTemplateCreated('Hab Ger Firmware')
-//     Template.removeTemplate();
-//     Template.seeTemplateHasDelete();
-// })
+// REMOVER TEMPLATE
+Scenario('@San: 17° DELETE TEMPLATE', async(I, Template) => {
+    Template.clickOpenTemplatePage();
+    Template.clickTemplateCreated('Hab Ger Firmware')
+    Template.removeTemplate();
+    Template.seeTemplateHasDelete();
+})
 
-// // ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
-// Scenario('@San: 18° FIRMWARE UPDATE - DELETE', async(I, Template) => {
-//     //criando template para habitação de FW
-//     Template.clickOpenTemplatePage();
-//     Template.clickCreateNew();
-//     Template.fillNameTemplate('FW Remove')
-//     Template.clickSave();
-//     Template.seeTemplateHasCreated();
+// ATUALIZADOR DE FIRMWARE -  REMOVER COM FW
+Scenario('@San: 18° FIRMWARE UPDATE - DELETE', async(I, Template) => {
+    //criando template para habitação de FW
+    Template.clickOpenTemplatePage();
+    Template.clickCreateNew();
+    Template.fillNameTemplate('FW Remove')
+    Template.clickSave();
+    Template.seeTemplateHasCreated();
 
-//     // Habilitando FW, para que possa ser removido habilitado
-//     Template.clickTemplateCreated('FW Remove')
-//     Template.clickManagerFirmware();
-//     Template.clickEnableFirware();
-//     Template.clickSave();
-//     Template.seeTemplateFWHasUpdated();
-//     Template.clickSave();
-//     Template.seeTemplateHasUpdated();
+    // Habilitando FW, para que possa ser removido habilitado
+    Template.clickTemplateCreated('FW Remove')
+    Template.clickManagerFirmware();
+    Template.clickEnableFirware();
+    Template.clickSave();
+    Template.seeTemplateFWHasUpdated();
+    Template.clickSave();
+    Template.seeTemplateHasUpdated();
 
-//     // Removendo Template com FW habilitado
-//     Template.clickOpenTemplatePage();
-//     Template.clickTemplateCreated('FW Remove')
-//     Template.removeTemplate();
-//     Template.seeTemplateHasDelete();
-// })
+    // Removendo Template com FW habilitado
+    Template.clickOpenTemplatePage();
+    Template.clickTemplateCreated('FW Remove')
+    Template.removeTemplate();
+    Template.seeTemplateHasDelete();
+})
 
 // // ATUALIZADOR DE FIRMWARE - CRIAR NOVA IMAGEM COM BINÁRIO ASSOCIOADO  
 // Scenario('@San: 19° Creating: template Binario', async (I) => {
