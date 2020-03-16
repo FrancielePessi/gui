@@ -64,12 +64,9 @@ Scenario('@basic: Creating a simple flow', async (I, Flow, Device, Notification)
     Device.shouldSeeMessage('output value');
 
     await Notification.openNotificationsPage();
-    //const totalBefore = await Notification.totalOfMessagesWithText('output value');
-    const totalBefore = await Notification.totalOfMessagesWithText('Texto');
+    const totalBefore = await Notification.totalOfMessagesWithText('output value');
     await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
     I.wait(5);
 
-    //await Notification.shouldISeeMessagesWithText('output value', totalBefore + 1); 
-    await Notification.shouldISeeMessagesWithText('Texto', totalBefore + 1); 
-
+    await Notification.shouldISeeMessagesWithText('output value', totalBefore + 1); 
 });

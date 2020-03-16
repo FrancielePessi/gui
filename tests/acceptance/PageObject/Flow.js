@@ -75,10 +75,7 @@ module.exports = {
     },
 
     addGEOfence(){
-        //I.click('#palette-collapse-all');
-       // I.click('#palette-header-output');
-        I.dragSlider('#palette_node_event_template_in', 800);
-        
+        I.dragSlider('#palette_node_event_template_in', 800); 
     },
 
 
@@ -122,6 +119,10 @@ module.exports = {
 
     editSwitchCondition() {
         I.fillField('.node-input-rule-value', 'input value');
+    },
+
+    UpdateEditSwitchCondition(value) {
+        I.fillField('.node-input-rule-value', value);
     },
 
     clickOnChange() {
@@ -189,7 +190,7 @@ module.exports = {
         I.wait(3)
     },
 
-    clickFlow(nameFlow){
+    clickFlowCreated(nameFlow){
         I.click(locate('span').withAttr({title: nameFlow})) 
         I.wait(3)
     },
@@ -198,4 +199,12 @@ module.exports = {
         await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
         await I.sendMQTTMessage(deviceId, '{"input": "input value"}');
     },
+
+    // Update Flow para o teste de Sanity
+    SelectFlowCreated(nameFlow){
+        I.click(locate('a').withAttr({ href: '#/flows' }));
+        I.click(locate('span').withAttr({title: nameFlow}))
+        I.wait(3)
+    },
 };
+

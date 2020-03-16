@@ -65,6 +65,13 @@ module.exports = {
         I.fillField('Template Name', value);
     },
 
+    // Sanity
+    fillNameAttributes(value){
+        //I.fillField(locate('div').find('input-field').withAttr({label: value}))
+        I.fillField('label', value)
+        I.wait(10)  
+    },
+
     change64QtyToShowPagination() {
         I.selectOption(locate('select').inside('.card-select-2'), '64');
     },
@@ -103,7 +110,18 @@ module.exports = {
     I.fillField('apply_image', apply_image)
     I.fillField('current_version', current_version)
     },
+
     // MANAGER FIRMWARE
+    clickManageImage(nameImage){
+        I.click('Manage Images')
+        I.click(locate('.body-form-nodata').withAttr({role: 'button'}))
+        I.fillField(locate('input').find('div').withAttr({name: nameImage}))
+        I.wait(5)
+    },
+
+    clickAttributeCreated(nameAttribute){
+        I.click(locate('div').withAttr({title: nameAttribute}))
+    },
 
     // Template filtro
     clickCardByNameTemplate(nameTemplate) {
@@ -161,7 +179,8 @@ module.exports = {
         I.click(this.ButtonLabel.save);
     },
 
-    addAttr(fieldValue, attrType, attrValueType, metaDataArray=[], value = '') {
+    //FOI ADD [] EM attrValueType=[]
+    addAttr(fieldValue, attrType, attrValueType=[], metaDataArray=[], value = '') {
         this._clickOpenFooterBtnNew('New Attribute');
         this._fillAttrForm(fieldValue, attrType, attrValueType, value);
         this._metasArrayToAddUpdateRemove(metaDataArray);

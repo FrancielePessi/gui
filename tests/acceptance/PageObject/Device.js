@@ -212,6 +212,8 @@ module.exports = {
         I.click(locate('.col-label-body').find('div').withAttr({title: name}))
     },
 
+    //clickStringAttributes
+
     clickZoomIn(){
         I.click('Zoom in')
         I.wait(1)
@@ -252,8 +254,24 @@ module.exports = {
         I.selectOption(locate('select').inside('.card-select-2'), '64');
     },
 
+    seeDetailsMensageActuador(Value){
+       // I.seeElement(locate('history-row').find('div').find('value').withText(Value))
+       I.seeElement(locate('div').withText(Value)) 
+       I.wait(5)
+    },
+
     seeHasCreated() {
         I.waitForText('Device created.', 20);
+    },
+
+    seeCreated(){
+        I.see('Device created.')
+        I.wait(5)
+    },
+
+    seeUpdated(){
+        I.see('Device updated.')
+        I.wait(5)    
     },
 
     seeHasUpdated() {
